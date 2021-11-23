@@ -22,6 +22,7 @@ class Game
         echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
 
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
+        $select = fgets(STDIN) . PHP_EOL;
     }
 }
 
