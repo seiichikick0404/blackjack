@@ -22,21 +22,30 @@ class Game
         echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
 
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
-        $select = fgets(STDIN) . PHP_EOL;
+        // 空白削除を対応
+        $input = fgets(STDIN);
+        $select = str_replace("\r\n", '', $input);
+        var_dump($select);
+        // ここまで
         $this->handleDraw($select, $player);
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
     }
 
     public function handleDraw(string $select, Player $player): void
     {
+        $select = 'Y';
+        var_dump($select);
+        exit;
         if ($select === 'Y') {
-            echo 'aaaa';
+            echo 'Yの場合';
             exit;
             $player->drawCards();
-        } elseif ($select === 'N') {
-            // 何もしない
+        } else {
+            echo 'Nの場合';
+            exit;
         }
     }
+    
 }
 
 $game = new Game();
