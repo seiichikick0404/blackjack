@@ -10,7 +10,7 @@ class Card
             'type' => 'ハート'
         ],
         [   'prim' => '3',
-            'renk' => 3,
+            'rank' => 3,
             'type' => 'ハート'
         ],
         [
@@ -74,7 +74,7 @@ class Card
             'type' => 'ダイヤ'
         ],
         [   'prim' => '3',
-            'renk' => 3,
+            'rank' => 3,
             'type' => 'ダイヤ'
         ],
         [
@@ -138,7 +138,7 @@ class Card
             'type' => 'スペード'
         ],
         [   'prim' => '3',
-            'renk' => 3,
+            'rank' => 3,
             'type' => 'スペード'
         ],
         [
@@ -202,7 +202,7 @@ class Card
             'type' => 'クラブ'
         ],
         [   'prim' => '3',
-            'renk' => 3,
+            'rank' => 3,
             'type' => 'クラブ'
         ],
         [

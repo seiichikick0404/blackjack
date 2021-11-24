@@ -35,13 +35,4 @@ class Player implements UserInterface
     {
         return $this->score;
     }
-
-    public function handleDraw(string $select): void
-    {
-        if ($select === 'Y') {
-            $this->drawCards();
-        } elseif ($select === 'N') {
-            // 何もしない
-        }
-    }
 }

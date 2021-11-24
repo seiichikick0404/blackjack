@@ -23,7 +23,19 @@ class Game
 
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
         $select = fgets(STDIN) . PHP_EOL;
-        $player->handleDraw($select);
+        $this->handleDraw($select, $player);
+        echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
+    }
+
+    public function handleDraw(string $select, Player $player): void
+    {
+        if ($select === 'Y') {
+            echo 'aaaa';
+            exit;
+            $player->drawCards();
+        } elseif ($select === 'N') {
+            // 何もしない
+        }
     }
 }
 
