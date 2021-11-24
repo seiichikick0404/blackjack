@@ -23,10 +23,25 @@ class Player implements UserInterface
     public function drawCards()
     {
         $card = new Card();
+        $card->randomCard();
+        $DrawCards = $card->getDrawCards();
+        //スコアに加算
+        $this->score += $DrawCards[0]['rank']; 
+        
+        return $DrawCards;
     }
 
     public function getScore(): int
     {
         return $this->score;
+    }
+
+    public function handleDraw(string $select): void
+    {
+        if ($select === 'Y') {
+            $this->drawCards();
+        } elseif ($select === 'N') {
+            // 何もしない
+        }
     }
 }

@@ -276,6 +276,12 @@ class Card
         }
     }
 
+    public function randomCard(): void
+    {
+        $array_key = (array_rand(self::CARD_RANKS, 1));
+        $this->CardArr[] = self::CARD_RANKS[$array_key];
+    }
+
     public function getDrawCards()
     {
         return $this->CardArr;
@@ -283,4 +289,4 @@ class Card
 }
 
 $test = new Card;
-$test->randomTwoCard();
+$test->randomCard();
