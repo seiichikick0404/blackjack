@@ -28,7 +28,7 @@ class Game
             $PlayerDrawCards = $player->drawCards();
             echo 'あなたの引いたカードは' . $PlayerDrawCards[0]['type'] . 'の' . $PlayerDrawCards[0]['prim'] . 'です' . PHP_EOL;
         } else {
-
+            
         }
         
         
