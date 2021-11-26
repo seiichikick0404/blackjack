@@ -31,6 +31,18 @@ class Player implements UserInterface
         return $DrawCards;
     }
 
+    public function handleDraw(string $input): bool
+    {
+        // 前後のスペース削除
+        $select = trim($input, "\t\n\r\0\x0B");
+
+        if ($select === 'Y') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function getScore(): int
     {
         return $this->score;

@@ -20,31 +20,23 @@ class Game
         $DealerFirstDrawCards = $dealer->firstDrawCards();
         echo 'ディーラーの引いたカードは' . $DealerFirstDrawCards[0]['type'] . 'の' . $DealerFirstDrawCards[0]['prim'] . 'です' . PHP_EOL;
         echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
-
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
-        // 空白削除を対応
+        
         $input = fgets(STDIN);
-        $select = str_replace("\r\n", '', $input);
-        var_dump($select);
-        // ここまで
-        $this->handleDraw($select, $player);
+        // カードを引くか判定
+        if ($player->handleDraw($input)) {
+            $PlayerDrawCards = $player->drawCards();
+            echo 'あなたの引いたカードは' . $PlayerDrawCards[0]['type'] . 'の' . $PlayerDrawCards[0]['prim'] . 'です' . PHP_EOL;
+        } else {
+
+        }
+        
+        
+        
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
     }
 
-    public function handleDraw(string $select, Player $player): void
-    {
-        $select = 'Y';
-        var_dump($select);
-        exit;
-        if ($select === 'Y') {
-            echo 'Yの場合';
-            exit;
-            $player->drawCards();
-        } else {
-            echo 'Nの場合';
-            exit;
-        }
-    }
+    
     
 }
 
