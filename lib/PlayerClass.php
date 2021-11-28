@@ -6,7 +6,6 @@ require_once(__DIR__ . '/CardClass.php');
 
 class Player implements UserInterface
 {
-    const GAME_SCORE = 21;
     private $score = 0;
 
     public function firstDrawCards(): array
