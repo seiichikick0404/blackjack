@@ -15,13 +15,9 @@ class Game
 
         $PlayerFirstDrawCards = $player->firstDrawCards();
         $this->displayCards($PlayerFirstDrawCards);
-        // echo 'あなたの引いたカードは' . $PlayerFirstDrawCards[0]['type'] . 'の' . $PlayerFirstDrawCards[0]['prim'] . 'です' . PHP_EOL;
-        // echo 'あなたの引いたカードは' . $PlayerFirstDrawCards[1]['type'] . 'の' . $PlayerFirstDrawCards[1]['prim'] . 'です' . PHP_EOL;
-        exit;
 
         $DealerFirstDrawCards = $dealer->firstDrawCards();
-        echo 'ディーラーの引いたカードは' . $DealerFirstDrawCards[0]['type'] . 'の' . $DealerFirstDrawCards[0]['prim'] . 'です' . PHP_EOL;
-        echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
+        $this->displayCards($DealerFirstDrawCards);
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
         
         $input = fgets(STDIN);
@@ -50,6 +46,10 @@ class Game
             #初回ドロー　プレイヤー
             echo 'プレイヤーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
             echo 'プレイヤーの引いたカードは' . $drawCards[1]['type'] . 'の' . $drawCards[1]['prim'] . 'です' . PHP_EOL;
+        } elseif (count($drawCards) === 3 && $drawCards['name'] === 'dealer') {
+            #初回ドロー　ディーラー
+            echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
         } else {
             echo '条件に当てはまりません。処理を終了します' . PHP_EOL;
             exit;
