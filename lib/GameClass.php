@@ -12,20 +12,19 @@ class Game
 
         $player = new Player();
         $dealer = new Dealer();
-
+        // 最初のドロー　プレイヤー
         $PlayerFirstDrawCards = $player->firstDrawCards();
         $this->displayCards($PlayerFirstDrawCards);
-
+        // 最初のドロー　NPC
         $DealerFirstDrawCards = $dealer->firstDrawCards();
         $this->displayCards($DealerFirstDrawCards);
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
         
         $input = fgets(STDIN);
         // カードを引くか判定
-        if ($player->handleDraw($input)) {
+        if ($player->handleDraw($input, $player->getScore())) {
             $PlayerDrawCards = $player->drawCards();
-
-            echo 'あなたの引いたカードは' . $PlayerDrawCards[0]['type'] . 'の' . $PlayerDrawCards[0]['prim'] . 'です' . PHP_EOL;
+            $this->displayCards($PlayerDrawCards);
         } else {
 
         }

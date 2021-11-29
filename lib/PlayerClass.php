@@ -6,6 +6,7 @@ require_once(__DIR__ . '/CardClass.php');
 
 class Player implements UserInterface
 {
+    private const GAME_COUNT = 21;
     private $score = 0;
     private $name = 'player';
 
@@ -36,12 +37,12 @@ class Player implements UserInterface
         return $DrawCards;
     }
 
-    public function handleDraw(string $input): bool
+    public function handleDraw(string $input, int $score): bool
     {
         // 前後のスペース削除
         $select = trim($input, "\t\n\r\0\x0B");
 
-        if ($select === 'Y') {
+        if ($select === 'Y' && $score <= $this::GAME_COUNT) {
             return true;
         } else {
             return false;
