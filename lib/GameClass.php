@@ -14,8 +14,10 @@ class Game
         $dealer = new Dealer();
 
         $PlayerFirstDrawCards = $player->firstDrawCards();
-        echo 'あなたの引いたカードは' . $PlayerFirstDrawCards[0]['type'] . 'の' . $PlayerFirstDrawCards[0]['prim'] . 'です' . PHP_EOL;
-        echo 'あなたの引いたカードは' . $PlayerFirstDrawCards[1]['type'] . 'の' . $PlayerFirstDrawCards[1]['prim'] . 'です' . PHP_EOL;
+        $this->displayCards($PlayerFirstDrawCards);
+        // echo 'あなたの引いたカードは' . $PlayerFirstDrawCards[0]['type'] . 'の' . $PlayerFirstDrawCards[0]['prim'] . 'です' . PHP_EOL;
+        // echo 'あなたの引いたカードは' . $PlayerFirstDrawCards[1]['type'] . 'の' . $PlayerFirstDrawCards[1]['prim'] . 'です' . PHP_EOL;
+        exit;
 
         $DealerFirstDrawCards = $dealer->firstDrawCards();
         echo 'ディーラーの引いたカードは' . $DealerFirstDrawCards[0]['type'] . 'の' . $DealerFirstDrawCards[0]['prim'] . 'です' . PHP_EOL;
@@ -26,14 +28,32 @@ class Game
         // カードを引くか判定
         if ($player->handleDraw($input)) {
             $PlayerDrawCards = $player->drawCards();
+
             echo 'あなたの引いたカードは' . $PlayerDrawCards[0]['type'] . 'の' . $PlayerDrawCards[0]['prim'] . 'です' . PHP_EOL;
         } else {
-            
+
         }
         
-        
-        
         echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
+    }
+
+    public function displayCards(array $drawCards): void
+    {
+        if (count($drawCards) === 2 && $drawCards['name'] === 'player') {
+            #通常ドロー プレイヤー
+            echo 'プレイヤーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+        } elseif (count($drawCards) === 2 && $drawCards['name'] === 'dealer') {
+            #通常ドロー　ディーラー
+            echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
+        } elseif (count($drawCards) === 3 && $drawCards['name'] === 'player') {
+            #初回ドロー　プレイヤー
+            echo 'プレイヤーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'プレイヤーの引いたカードは' . $drawCards[1]['type'] . 'の' . $drawCards[1]['prim'] . 'です' . PHP_EOL;
+        } else {
+            echo '条件に当てはまりません。処理を終了します' . PHP_EOL;
+            exit;
+        }
     }
 
     

@@ -7,6 +7,7 @@ require_once(__DIR__ . '/CardClass.php');
 class Dealer implements UserInterface
 {
     private $score = 0;
+    private $name = 'dealer';
 
     public function firstDrawCards(): array
     {
@@ -15,7 +16,9 @@ class Dealer implements UserInterface
         $DrawCards = $card->getDrawCards();
         //スコアに加算
         $this->score += $DrawCards[0]['rank']; 
-        $this->score += $DrawCards[1]['rank']; 
+        $this->score += $DrawCards[1]['rank'];
+        // 配列にname追加
+        $DrawCards['name'] = $this->name; 
 
         return $DrawCards;
     }
