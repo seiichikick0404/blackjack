@@ -3,6 +3,7 @@ namespace BlackJack\lib;
 
 require_once(__DIR__ . '/PlayerClass.php');
 require_once(__DIR__ . '/DealerClass.php');
+require_once(__DIR__ . '/HandEvaluatorClass.php');
 
 class Game
 {
@@ -18,33 +19,42 @@ class Game
         // 最初のドロー　NPC
         $DealerFirstDrawCards = $dealer->firstDrawCards();
         $this->displayCards($DealerFirstDrawCards);
-        echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
+        // echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
         
-        $input = fgets(STDIN);
+        // $input = fgets(STDIN);
         // カードを引くか判定
-        if ($player->handleDraw($input, $player->getScore())) {
-            $PlayerDrawCards = $player->drawCards();
-            $this->displayCards($PlayerDrawCards);
-        } else {
+        while (true) {
+            $input = $this->displayHandleDraw($player);
 
+            if ($player->handleDraw($input, $player->getScore())) {
+                $PlayerDrawCards = $player->drawCards();
+                $this->displayCards($PlayerDrawCards);
+                #カードの判定
+                $PlayerCheckHand = new HandEvaluator();
+                $PlayerCheckHand->checkOver($player, $dealer, 'プレイヤー');
+            } else {
+                $dealer->eachDrawCards();
+                #カードの判定
+                $DealerCheckHand = new HandEvaluator();
+                $DealerCheckHand->checkOver($player, $dealer, 'ディーラー');
+            }
         }
-        
-        echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
+
     }
 
     public function displayCards(array $drawCards): void
     {
         if (count($drawCards) === 2 && $drawCards['name'] === 'player') {
             #通常ドロー プレイヤー
-            echo 'プレイヤーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'あなたの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
         } elseif (count($drawCards) === 2 && $drawCards['name'] === 'dealer') {
             #通常ドロー　ディーラー
             echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
             echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
         } elseif (count($drawCards) === 3 && $drawCards['name'] === 'player') {
             #初回ドロー　プレイヤー
-            echo 'プレイヤーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
-            echo 'プレイヤーの引いたカードは' . $drawCards[1]['type'] . 'の' . $drawCards[1]['prim'] . 'です' . PHP_EOL;
+            echo 'あなたの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'あなたの引いたカードは' . $drawCards[1]['type'] . 'の' . $drawCards[1]['prim'] . 'です' . PHP_EOL;
         } elseif (count($drawCards) === 3 && $drawCards['name'] === 'dealer') {
             #初回ドロー　ディーラー
             echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
@@ -54,8 +64,13 @@ class Game
             exit;
         }
     }
-
     
+    public function displayHandleDraw(Player $player): string
+    {
+        echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
+        $input = fgets(STDIN);
+        return $input;
+    }
     
 }
 
