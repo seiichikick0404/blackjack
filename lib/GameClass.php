@@ -19,9 +19,7 @@ class Game
         // 最初のドロー　NPC
         $DealerFirstDrawCards = $dealer->firstDrawCards();
         $this->displayCards($DealerFirstDrawCards);
-        // echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
         
-        // $input = fgets(STDIN);
         // カードを引くか判定
         while (true) {
             $input = $this->displayHandleDraw($player);
@@ -39,7 +37,6 @@ class Game
                 $DealerCheckHand->checkOver($player, $dealer, 'ディーラー');
             }
         }
-
     }
 
     public function displayCards(array $drawCards): void
