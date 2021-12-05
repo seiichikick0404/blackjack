@@ -31,12 +31,17 @@ class Game
                 $PlayerCheckHand = new HandEvaluator();
                 $PlayerCheckHand->checkOver($player, $dealer, 'プレイヤー');
             } else {
+                echo 'ディーラーの引いた2枚目のカードは' . $DealerFirstDrawCards[1]['type'] . 'の' . $DealerFirstDrawCards[1]['prim'] . 'でした。' . PHP_EOL;
                 $dealer->eachDrawCards();
                 #カードの判定
                 $DealerCheckHand = new HandEvaluator();
                 $DealerCheckHand->checkOver($player, $dealer, 'ディーラー');
             }
         }
+
+        $resulut = new HandEvaluator();
+        $resulut->checkWinner($player, $dealer);
+        exit;
     }
 
     public function displayCards(array $drawCards): void
