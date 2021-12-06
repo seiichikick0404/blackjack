@@ -37,13 +37,16 @@ class HandEvaluator
         $PlayerDifference = self::MATCH_POINT - $player->getScore();
         $DealerDifference = self::MATCH_POINT - $dealer->getScore();
 
+        echo 'あなたの現在の得点は' . $player->getScore() . 'です。' . PHP_EOL;
+        echo 'ディーラーの現在の得点は' . $dealer->getScore() . 'です。' . PHP_EOL;
+
         if ($PlayerDifference < $DealerDifference) {
-            echo 'あなたの勝ちです！' . PHP_EOL;
+            echo '勝者はあなたです！' . PHP_EOL;
         } elseif ($DealerDifference < $PlayerDifference) {
-            echo 'ディーラーの勝ちです！' . PHP_EOL;
+            echo '勝者はディーラーです' . PHP_EOL;
         }
 
-        echo 'ブラックジャックを終了します。';
+        echo 'ブラックジャックを終了します。' . PHP_EOL;
         exit;
     }
 

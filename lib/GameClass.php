@@ -30,18 +30,19 @@ class Game
                 #カードの判定
                 $PlayerCheckHand = new HandEvaluator();
                 $PlayerCheckHand->checkOver($player, $dealer, 'プレイヤー');
-            } else {
+            } elseif ($player->handleDraw($input, $player->getScore()) === false) {
                 echo 'ディーラーの引いた2枚目のカードは' . $DealerFirstDrawCards[1]['type'] . 'の' . $DealerFirstDrawCards[1]['prim'] . 'でした。' . PHP_EOL;
-                $dealer->eachDrawCards();
+                $dealer->eachDrawCards($dealer);
                 #カードの判定
                 $DealerCheckHand = new HandEvaluator();
                 $DealerCheckHand->checkOver($player, $dealer, 'ディーラー');
+                break;
             }
         }
-
+        // 結果判定処理
         $resulut = new HandEvaluator();
         $resulut->checkWinner($player, $dealer);
-        exit;
+        exit;    
     }
 
     public function displayCards(array $drawCards): void
@@ -56,7 +57,7 @@ class Game
         } elseif (count($drawCards) === 3 && $drawCards['name'] === 'player') {
             #初回ドロー　プレイヤー
             echo 'あなたの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
-            echo 'あなたの引いたカードは' . $drawCards[1]['type'] . 'の' . $drawCards[1]['prim'] . 'です' . PHP_EOL;
+            echo 'あなたの引いた2枚目のカードは' . $drawCards[1]['type'] . 'の' . $drawCards[1]['prim'] . 'です' . PHP_EOL;
         } elseif (count($drawCards) === 3 && $drawCards['name'] === 'dealer') {
             #初回ドロー　ディーラー
             echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;

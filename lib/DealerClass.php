@@ -37,15 +37,16 @@ class Dealer implements UserInterface
         return $DrawCards;
     }
 
-    public function  eachDrawCards(): void
+    public function  eachDrawCards(Dealer $dealer): void
     {
         while ($this->getScore() <= self::GAME_COUNT) {
             $card = new Card();
             $card->randomCard();
             $DrawCards = $card->getDrawCards();
-            echo 'ディーラーの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
             //スコアに加算
             $this->score += $DrawCards[0]['rank'];
+            echo 'ディーラーの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'ディーラーの現在の得点は' . $dealer->getScore() . 'です' . PHP_EOL;
         }
     }
 
