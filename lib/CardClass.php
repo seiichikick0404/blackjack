@@ -1,6 +1,9 @@
 <?php
 namespace BlackJack\lib;
 
+require_once(__DIR__ . '/PlayerClass.php');
+require_once(__DIR__ . '/DealerClass.php');
+
 class Card
 {
     const CARD_RANKS = [

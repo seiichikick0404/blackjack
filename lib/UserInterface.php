@@ -3,7 +3,7 @@ namespace BlackJack\lib;
 
 interface UserInterface
 {
-    public function firstDrawCards();
-    public function drawCards();
+    public function firstDrawCards($user);
+    public function drawCards($user);
     public function getScore();
 }

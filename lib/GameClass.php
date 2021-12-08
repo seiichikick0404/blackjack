@@ -14,10 +14,10 @@ class Game
         $player = new Player();
         $dealer = new Dealer();
         // 最初のドロー　プレイヤー
-        $PlayerFirstDrawCards = $player->firstDrawCards();
+        $PlayerFirstDrawCards = $player->firstDrawCards($player);
         $this->displayCards($PlayerFirstDrawCards);
         // 最初のドロー　NPC
-        $DealerFirstDrawCards = $dealer->firstDrawCards();
+        $DealerFirstDrawCards = $dealer->firstDrawCards($dealer);
         $this->displayCards($DealerFirstDrawCards);
         
         // カードを引くか判定
@@ -25,7 +25,7 @@ class Game
             $input = $this->displayHandleDraw($player);
 
             if ($player->handleDraw($input, $player->getScore())) {
-                $PlayerDrawCards = $player->drawCards();
+                $PlayerDrawCards = $player->drawCards($player);
                 $this->displayCards($PlayerDrawCards);
                 #カードの判定
                 $PlayerCheckHand = new HandEvaluator();

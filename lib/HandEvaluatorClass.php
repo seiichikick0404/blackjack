@@ -49,5 +49,4 @@ class HandEvaluator
         echo 'ブラックジャックを終了します。' . PHP_EOL;
         exit;
     }
-
 }

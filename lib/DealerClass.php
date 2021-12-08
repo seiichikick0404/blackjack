@@ -10,21 +10,25 @@ class Dealer implements UserInterface
     private $score = 0;
     private $name = 'dealer';
 
-    public function firstDrawCards(): array
+    public function firstDrawCards($dealer): array
     {
         $card = new Card();
         $card->randomTwoCard();
         $DrawCards = $card->getDrawCards();
-        //スコアに加算
-        $this->score += $DrawCards[0]['rank']; 
-        $this->score += $DrawCards[1]['rank'];
-        // 配列にname追加
-        $DrawCards['name'] = $this->name; 
+        // スコアに加算
+        if ($DrawCards[0]['prim'] === 'A' || $DrawCards[1]['prim'] === 'A') {
+            $this->handleScore($dealer);
+        } else {
+            $this->score += $DrawCards[0]['rank']; 
+            $this->score += $DrawCards[1]['rank'];
+            // 配列にname追加
+            $DrawCards['name'] = $this->name; 
+        }
 
         return $DrawCards;
     }
 
-    public function drawCards()
+    public function drawCards($dealer)
     {
         $card = new Card();
         $card->randomCard();
@@ -44,9 +48,23 @@ class Dealer implements UserInterface
             $card->randomCard();
             $DrawCards = $card->getDrawCards();
             //スコアに加算
-            $this->score += $DrawCards[0]['rank'];
+            if ($DrawCards[0]['prim'] === 'A') {
+                $this->handleScore($dealer);
+            } else {
+                $this->score += $DrawCards[0]['rank'];
+            }
+            
             echo 'ディーラーの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
             echo 'ディーラーの現在の得点は' . $dealer->getScore() . 'です' . PHP_EOL;
+        }
+    }
+
+    public function handleScore($dealer)
+    {
+        if ($dealer->getScore() + 11 > self::GAME_COUNT) {
+            $this->score += 1;
+        } elseif ($dealer->getScore() + 11 < self::GAME_COUNT) {
+            $this->score += 11;
         }
     }
 
