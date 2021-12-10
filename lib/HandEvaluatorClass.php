@@ -44,6 +44,8 @@ class HandEvaluator
             echo '勝者はあなたです！' . PHP_EOL;
         } elseif ($DealerDifference < $PlayerDifference) {
             echo '勝者はディーラーです' . PHP_EOL;
+        } elseif ($PlayerDifference === $DealerDifference) {
+            echo 'この勝負は引き分けです' . PHP_EOL;
         }
 
         echo 'ブラックジャックを終了します。' . PHP_EOL;

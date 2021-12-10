@@ -16,9 +16,11 @@ class Player implements UserInterface
         $card = new Card();
         $card->randomTwoCard();
         $DrawCards = $card->getDrawCards();
+        // var_dump($DrawCards);
         // スコアに加算
         if ($DrawCards[0]['prim'] === 'A' || $DrawCards[1]['prim'] === 'A') {
             $this->handleScore($player);
+            $DrawCards['name'] = $this->name;
         } else {
             $this->score += $DrawCards[0]['rank']; 
             $this->score += $DrawCards[1]['rank'];
@@ -62,9 +64,12 @@ class Player implements UserInterface
     {
         $MaxScore = $player->getScore() + 11;
 
+
         if ($MaxScore <= self::GAME_COUNT) {
+            echo '+11が実行' . PHP_EOL;
             $this->score += 11;
         } else {
+            echo '+1が実行' . PHP_EOL;
             $this->score += 1;
         }
     }
@@ -74,3 +79,9 @@ class Player implements UserInterface
         return $this->score;
     }
 }
+
+$player = new Player();
+$DrawCards = $player->firstDrawCards($player);
+var_dump($DrawCards);
+exit;
+
