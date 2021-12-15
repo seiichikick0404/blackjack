@@ -23,7 +23,6 @@ class Game
         // カードを引くか判定
         while (true) {
             $input = $this->displayHandleDraw($player);
-
             if ($player->handleDraw($input, $player->getScore())) {
                 $PlayerDrawCards = $player->drawCards($player);
                 $this->displayCards($PlayerDrawCards);
@@ -47,8 +46,7 @@ class Game
 
     public function displayCards(array $drawCards): void
     {
-        var_dump($drawCards);
-        
+
         if (count($drawCards) === 2 && $drawCards['name'] === 'player') {
             #通常ドロー プレイヤー
             echo 'あなたの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;

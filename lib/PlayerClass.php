@@ -16,7 +16,6 @@ class Player implements UserInterface
         $card = new Card();
         $card->randomTwoCard();
         $DrawCards = $card->getDrawCards();
-        // var_dump($DrawCards);
         // スコアに加算
         if ($DrawCards[0]['prim'] === 'A' || $DrawCards[1]['prim'] === 'A') {
             $this->handleScore($player, $DrawCards);
