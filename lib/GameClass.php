@@ -2,6 +2,7 @@
 namespace BlackJack\lib;
 
 require_once(__DIR__ . '/PlayerClass.php');
+require_once(__DIR__ . '/Player2Class.php');
 require_once(__DIR__ . '/DealerClass.php');
 require_once(__DIR__ . '/HandEvaluatorClass.php');
 
@@ -12,17 +13,25 @@ class Game
         echo 'ブラックジャックを開始します' . PHP_EOL;
 
         $player = new Player();
+        $player2 = new Player2();
         $dealer = new Dealer();
+
         // 最初のドロー　プレイヤー
         $PlayerFirstDrawCards = $player->firstDrawCards($player);
         $this->displayCards($PlayerFirstDrawCards);
+        // 最初のドロー　プレイヤー2
+        $Player2FirstDrawCards = $player2->firstDrawCards($player2);
+        $this->displayCards($Player2FirstDrawCards);
         // 最初のドロー　NPC
         $DealerFirstDrawCards = $dealer->firstDrawCards($dealer);
         $this->displayCards($DealerFirstDrawCards);
+
+        exit;
         
         // カードを引くか判定
         while (true) {
             $input = $this->displayHandleDraw($player);
+
             if ($player->handleDraw($input, $player->getScore())) {
                 $PlayerDrawCards = $player->drawCards($player);
                 $this->displayCards($PlayerDrawCards);
@@ -50,6 +59,9 @@ class Game
         if (count($drawCards) === 2 && $drawCards['name'] === 'player') {
             #通常ドロー プレイヤー
             echo 'あなたの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+        } elseif (count($drawCards) === 2 && $drawCards['name'] === 'player2') {
+            #通常ドロー　プレイヤー2
+            echo 'プレイヤー2の引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
         } elseif (count($drawCards) === 2 && $drawCards['name'] === 'dealer') {
             #通常ドロー　ディーラー
             echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
@@ -58,6 +70,10 @@ class Game
             #初回ドロー　プレイヤー
             echo 'あなたの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
             echo 'あなたの引いた2枚目のカードは' . $drawCards[1]['type'] . 'の' . $drawCards[1]['prim'] . 'です' . PHP_EOL;
+        } elseif (count($drawCards) === 3 && $drawCards['name'] === 'player2') {
+            #初回ドロー　プレイヤー2
+            echo 'プレイヤー2の引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'プレイヤー2の引いた2枚目のカードは' . $drawCards[1]['type'] . PHP_EOL;
         } elseif (count($drawCards) === 3 && $drawCards['name'] === 'dealer') {
             #初回ドロー　ディーラー
             echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
