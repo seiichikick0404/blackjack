@@ -7,7 +7,7 @@ require_once(__DIR__ . '/HandEvaluatorClass.php');
 
 class Player2 implements UserInterface
 {
-    private const GAME_COUNT = 21;
+    private const GAME_COUNT = 10;
     private $score = 0;
     private $name = 'player2';
 
@@ -46,6 +46,26 @@ class Player2 implements UserInterface
         }
         
         return $DrawCards;
+    }
+
+    public function  eachDrawCards(UserInterface $player2): void
+    {
+        while ($this->getScore() <= self::GAME_COUNT) {
+            $card = new Card();
+            $card->randomCard();
+            $DrawCards = $card->getDrawCards();
+            //スコアに加算
+            if ($DrawCards[0]['prim'] === 'A') {
+                $this->handleScore($player2, $DrawCards);
+                $DrawCards['name'] = $this->name; 
+            } else {
+                $this->score += $DrawCards[0]['rank'];
+                $DrawCards['name'] = $this->name; 
+            }
+            
+            echo 'プレイヤー2の引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'プレイヤー2の現在の得点は' . $player2->getScore() . 'です' . PHP_EOL;
+        }
     }
 
     public function handleDraw(string $input, int $score): bool

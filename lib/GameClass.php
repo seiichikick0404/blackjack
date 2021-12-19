@@ -26,7 +26,6 @@ class Game
         $DealerFirstDrawCards = $dealer->firstDrawCards($dealer);
         $this->displayCards($DealerFirstDrawCards);
 
-        exit;
         
         // カードを引くか判定
         while (true) {
@@ -37,19 +36,26 @@ class Game
                 $this->displayCards($PlayerDrawCards);
                 #カードの判定
                 $PlayerCheckHand = new HandEvaluator();
-                $PlayerCheckHand->checkOver($player, $dealer, 'プレイヤー');
+                $PlayerCheckHand->checkOver($player, $player2, $dealer, 'プレイヤー');
             } elseif ($player->handleDraw($input, $player->getScore()) === false) {
+                #プレイヤー2の処理
+                $player2->eachDrawCards($player2);
+                #カードの判定
+                $Player2CheckHand = new HandEvaluator();
+                $Player2CheckHand->checkOver($player, $player2, $dealer, 'プレイヤー2');
+
+                # ディーラーの処理
                 echo 'ディーラーの引いた2枚目のカードは' . $DealerFirstDrawCards[1]['type'] . 'の' . $DealerFirstDrawCards[1]['prim'] . 'でした。' . PHP_EOL;
                 $dealer->eachDrawCards($dealer);
                 #カードの判定
                 $DealerCheckHand = new HandEvaluator();
-                $DealerCheckHand->checkOver($player, $dealer, 'ディーラー');
+                $DealerCheckHand->checkOver($player, $player2, $dealer, 'ディーラー');
                 break;
             }
         }
         // 結果判定処理
         $resulut = new HandEvaluator();
-        $resulut->checkWinner($player, $dealer);
+        $resulut->checkWinner($player, $player2, $dealer);
         exit;    
     }
 
@@ -73,7 +79,7 @@ class Game
         } elseif (count($drawCards) === 3 && $drawCards['name'] === 'player2') {
             #初回ドロー　プレイヤー2
             echo 'プレイヤー2の引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
-            echo 'プレイヤー2の引いた2枚目のカードは' . $drawCards[1]['type'] . PHP_EOL;
+            echo 'プレイヤー2の引いた2枚目のカードは' . $drawCards[1]['type'] . 'の' . $drawCards['prim'] . 'です' . PHP_EOL;
         } elseif (count($drawCards) === 3 && $drawCards['name'] === 'dealer') {
             #初回ドロー　ディーラー
             echo 'ディーラーの引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
