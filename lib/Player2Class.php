@@ -110,14 +110,16 @@ class Player2 implements UserInterface
                 $this->score += 1;
             }
         }
-
-
-        
     }
 
     public function getScore(): int
     {
         return $this->score;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }
 

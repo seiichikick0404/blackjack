@@ -99,6 +99,11 @@ class Player implements UserInterface
     {
         return $this->score;
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }
 
 // 以下テスト

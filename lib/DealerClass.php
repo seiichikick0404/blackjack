@@ -42,7 +42,7 @@ class Dealer implements UserInterface
         return $DrawCards;
     }
 
-    public function  eachDrawCards(Dealer $dealer): void
+    public function  eachDrawCards(UserInterface $dealer): void
     {
         while ($this->getScore() <= self::GAME_COUNT) {
             $card = new Card();
@@ -97,6 +97,11 @@ class Dealer implements UserInterface
     public function getScore(): int
     {
         return $this->score;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }
 

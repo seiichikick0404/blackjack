@@ -5,6 +5,8 @@ require_once(__DIR__ . '/PlayerClass.php');
 require_once(__DIR__ . '/Player2Class.php');
 require_once(__DIR__ . '/DealerClass.php');
 require_once(__DIR__ . '/HandEvaluatorClass.php');
+require_once(__DIR__ . '/TwoPlayerRuleClass.php');
+require_once(__DIR__ . '/ThreePlayerRuleClass.php');
 
 class Game
 {
@@ -17,12 +19,12 @@ class Game
 
     public function startGame()
     {
-        // $player = new Player();
-        // $player2 = new Player2();
-        $dealer = new Dealer();
-
-        # 人数に応じてインスタンス生成
+        # インスタンス生成
         $PlayerArr = $this->getPlayers();
+        # 前処理用インスタンス
+        $PlayerSliceArr = $PlayerArr;
+        # ルールセット
+        $rule = $this->getRule();
         
         echo 'ブラックジャックを開始します' . PHP_EOL;
 
@@ -32,49 +34,32 @@ class Game
             $this->displayCards($PlayerFirstDrawCards);
         }
         
-
-        exit;
-
-        // 最初のドロー　プレイヤー
-        // $PlayerFirstDrawCards = $player->firstDrawCards($player);
-        // $this->displayCards($PlayerFirstDrawCards);
-        // // 最初のドロー　プレイヤー2
-        // $Player2FirstDrawCards = $player2->firstDrawCards($player2);
-        // $this->displayCards($Player2FirstDrawCards);
-        // // 最初のドロー　NPC
-        // $DealerFirstDrawCards = $dealer->firstDrawCards($dealer);
-        // $this->displayCards($DealerFirstDrawCards);
-
-        
         // カードを引くか判定
         while (true) {
-            $input = $this->displayHandleDraw($player);
+            $input = $this->displayHandleDraw($PlayerArr[0]);
 
-            if ($player->handleDraw($input, $player->getScore())) {
-                $PlayerDrawCards = $player->drawCards($player);
+            if ($PlayerArr[0]->handleDraw($input, $PlayerArr[0]->getScore())) {
+                $PlayerDrawCards = $PlayerArr[0]->drawCards($PlayerArr[0]);
                 $this->displayCards($PlayerDrawCards);
                 #カードの判定
-                $PlayerCheckHand = new HandEvaluator();
-                $PlayerCheckHand->checkOver($player, $player2, $dealer, 'プレイヤー');
-            } elseif ($player->handleDraw($input, $player->getScore()) === false) {
-                #プレイヤー2の処理
-                $player2->eachDrawCards($player2);
-                #カードの判定
-                $Player2CheckHand = new HandEvaluator();
-                $Player2CheckHand->checkOver($player, $player2, $dealer, 'プレイヤー2');
-
-                # ディーラーの処理
-                echo 'ディーラーの引いた2枚目のカードは' . $DealerFirstDrawCards[1]['type'] . 'の' . $DealerFirstDrawCards[1]['prim'] . 'でした。' . PHP_EOL;
-                $dealer->eachDrawCards($dealer);
-                #カードの判定
-                $DealerCheckHand = new HandEvaluator();
-                $DealerCheckHand->checkOver($player, $player2, $dealer, 'ディーラー');
+                $PlayerCheckHand = new HandEvaluator($rule);
+                $PlayerCheckHand->checkOver($PlayerArr);
+                
+            } elseif ($PlayerArr[0]->handleDraw($input, $PlayerArr[0]->getScore()) === false) {
+                array_shift($PlayerSliceArr);
+                foreach ($PlayerSliceArr as $player) {
+                    $player->eachDrawCards($player);
+                    #カードの判定
+                    $PlayerCheckHand = new HandEvaluator($rule);
+                    $PlayerCheckHand->checkOver($PlayerArr);
+                }
                 break;
             }
         }
+        
         // 結果判定処理
-        $resulut = new HandEvaluator();
-        $resulut->checkWinner($player, $player2, $dealer);
+        $resulut = new HandEvaluator($rule);
+        $resulut->checkWinner($PlayerArr);
         exit;    
     }
 
@@ -129,9 +114,20 @@ class Game
             return [$player, $player2, $dealer];
         }
     }
+
+    public function getRule()
+    {
+        if ($this->PlayerInt === 1) {
+            $rule = new TwoPlayerRule();
+        } elseif ($this->PlayerInt === 2) {
+            $rule = new ThreePlayerRule();
+        }
+
+        return $rule;
+    }
 }
 
 
 
-$game = new Game(2);
+$game = new Game(1);
 $game->startGame();
