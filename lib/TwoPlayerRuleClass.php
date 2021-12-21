@@ -6,7 +6,7 @@ class TwoPlayerRule implements Rule
 {
     private const MATCH_POINT = 21;
 
-    public function checkOver(array $PlayerArr)
+    public function checkOver(array $PlayerArr): void
     {
         if ($PlayerArr[0]->getName() === 'player' && $PlayerArr[0]->getScore() > self::MATCH_POINT) {
             
@@ -19,7 +19,7 @@ class TwoPlayerRule implements Rule
         }
     }
 
-    public function checkWinner(array $PlayerArr)
+    public function checkWinner(array $PlayerArr): void
     {
         // 得点表示
         foreach ($PlayerArr as $player) {
@@ -65,5 +65,28 @@ class TwoPlayerRule implements Rule
         }
         echo $winner . 'の勝ちです！' . PHP_EOL;
         exit;
+    }
+
+    public function displayDrawCards(array $DrawCards): void
+    {
+       if (count($DrawCards) === 2 && $DrawCards['name'] === 'player') {
+            #通常ドロー プレイヤー
+            echo 'あなたの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
+        } elseif (count($DrawCards) === 2 && $DrawCards['name'] === 'dealer') {
+            #通常ドロー　ディーラー
+            echo 'ディーラーの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
+        } elseif (count($DrawCards) === 3 && $DrawCards['name'] === 'player') {
+            #初回ドロー　プレイヤー
+            echo 'あなたの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'あなたの引いた2枚目のカードは' . $DrawCards[1]['type'] . 'の' . $DrawCards[1]['prim'] . 'です' . PHP_EOL;
+        } elseif (count($DrawCards) === 3 && $DrawCards['name'] === 'dealer') {
+            #初回ドロー　ディーラー
+            echo 'ディーラーの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'ディーラーの引いた2枚目のカードは分かりません' . PHP_EOL;
+        } else {
+            echo '条件に当てはまりません。処理を終了します' . PHP_EOL;
+            exit;
+        } 
     }
 }
