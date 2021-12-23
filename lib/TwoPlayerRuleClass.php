@@ -5,9 +5,13 @@ require_once(__DIR__ . '/RuleInterface.php');
 class TwoPlayerRule implements Rule
 {
     private const MATCH_POINT = 21;
+    private $ActivePlayers = [];
 
     public function checkOver(array $PlayerArr): void
     {
+        #　アクティブプレイヤーをセット
+        $this->ActivePlayers = $PlayerArr;
+        
         if ($PlayerArr[0]->getName() === 'player' && $PlayerArr[0]->getScore() > self::MATCH_POINT) {
             
             $this->displayResult($PlayerArr, 'ディーラー');
@@ -51,6 +55,11 @@ class TwoPlayerRule implements Rule
             echo 'この勝負引き分けです' . PHP_EOL;
         }
         exit;
+    }
+
+    public function getActivePlayers()
+    {
+        return $this->ActivePlayers;
     }
 
     public function displayResult($PlayerArr, string $winner): void

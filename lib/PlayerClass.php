@@ -52,7 +52,7 @@ class Player implements UserInterface
     {
         // 前後のスペース削除
         $select = trim($input, "\t\n\r\0\x0B");
-
+        
         if ($select === 'Y') {
             return true;
         } else {

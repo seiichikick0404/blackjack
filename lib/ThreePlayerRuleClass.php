@@ -10,55 +10,26 @@ class ThreePlayerRule implements Rule
 
     public function checkOver(array $PlayerArr): void
     {
-        # 前処理用インスタンス
-        $PlayerSliceArr = $PlayerArr;
-
-        # バースト処理1から考える
-        # バーストしてないプレイヤーが処理を実行できるようにしたい
-
-        // if ($PlayerArr[0]->getName() === 'player' && $PlayerArr[0]->getScore() > self::MATCH_POINT) {
-        //     // バーストしたプレイヤーを削除
-        //     echo 'あなたはバーストしました' . PHP_EOL;
-        //     array_shift($PlayerSliceArr);
-        //     $this->ActivePlayers = $PlayerSliceArr;
-        //     // 他プレイヤー処理続行
-        //     $this->doContinue($this->ActivePlayers, $PlayerArr);
-        // } elseif ($PlayerArr[1]->getName() === 'player2' && $PlayerArr[1]->getScore() > self::MATCH_POINT) {
-        //     // バーストしたプレイヤーを削除
-        //     echo 'プレイヤー2はバーストしました' . PHP_EOL;
-        //     if ($this->getActivePlayerInt === 2) {
-        //         unset($PlayerSliceArr[0]);
-        //         $PlayerSliceArr = array_values($PlayerSliceArr);
-        //         $this->ActivePlayers = $PlayerSliceArr;
-        //     } elseif ($this->getActivePlayerInt() === 3) {
-        //         unset($PlayerSliceArr[1]);
-        //         $PlayerSliceArr = array_values($PlayerSliceArr);
-        //         $this->ActivePlayers = $PlayerSliceArr;
-        //     }
-        // } elseif ($PlayerArr[2]->getName() === 'dealer' && $PlayerArr[2]->getScore() > self::MATCH_POINT) {
-        //     // バーストしたプレイヤーを削除
-        //     echo 'ディーラーはバーストしました' . PHP_EOL;
-        //     if ($this->getActivePlayerInt === 1) {
-        //         unset($PlayerSliceArr[0]);
-        //         $PlayerSliceArr = array_values($PlayerSliceArr);
-        //         $this->ActivePlayers = $PlayerSliceArr;
-        //     } elseif ($this->getActivePlayerInt() === 2) {
-        //         unset($PlayerSliceArr[1]);
-        //         $PlayerSliceArr = array_values($PlayerSliceArr);
-        //         $this->ActivePlayers = $PlayerSliceArr;
-        //     } elseif ($this->getActivePlayerInt() === 3) {
-        //         unset($PlayerSliceArr[2]);
-        //         $PlayerSliceArr = array_values($PlayerSliceArr);
-        //         $this->ActivePlayers = $PlayerSliceArr;
-        //     }
-        // }
-    }
-
-    public function doContinue(array $ActivePlayers, array $PlayerArr) {
-        foreach ($ActivePlayers as $player) {
-            $player->eachDrawCards($player);
-            #カードの判定
-            $this->checkOver($PlayerArr);
+        #　アクティブプレイヤーをセット
+        $this->ActivePlayers = $PlayerArr;
+        # バースト処理
+        foreach ($PlayerArr as $index => $player) {
+            if ($player->getName() === 'player' && $player->getScore() > self::MATCH_POINT) {
+                echo 'あなたはバーストしました' . PHP_EOL;
+                // バーストしたプレイヤーを削除
+                unset($this->ActivePlayers[$index]);
+                $this->ActivePlayers = array_values($this->ActivePlayers);
+            } elseif ($player->getName() === 'player2' && $player->getScore() > self::MATCH_POINT) {
+                echo 'プレイヤー2はバーストしました' . PHP_EOL;
+                // バーストしたプレイヤーを削除
+                unset($this->ActivePlayers[$index]);
+                $this->ActivePlayers = array_values($this->ActivePlayers);
+            } elseif ($player->getName() === 'dealer' && $player->getScore() > self::MATCH_POINT) {
+                echo 'ディーラーはバーストしました' . PHP_EOL;
+                // バーストしたプレイヤーを削除
+                unset($this->ActivePlayers[$index]);
+                $this->ActivePlayers = array_values($this->ActivePlayers);
+            }
         }
     }
 
@@ -102,14 +73,21 @@ class ThreePlayerRule implements Rule
             echo $MinPlayers[0] . 'と' . $MinPlayers[1] . 'は引き分けです' . PHP_EOL;
         } elseif (count($MinPlayers) === 3) {
             echo 'この勝負引き分けです' . PHP_EOL;
+        } else {
+            echo '全員バーストしたので引き分けです' . PHP_EOL;
         }
         exit;
     }
 
-    public function getActivePlayerInt()
+    public function getActivePlayers()
     {
-        return count($this->ActivePlayers);
+        return $this->ActivePlayers;
     }
+
+    // public function getActivePlayerInt()
+    // {
+    //     return count($this->ActivePlayers);
+    // }
 
     public function displayResult($PlayerArr, string $winner): void
     {
