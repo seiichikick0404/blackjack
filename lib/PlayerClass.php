@@ -48,12 +48,12 @@ class Player implements UserInterface
         return $DrawCards;
     }
 
-    public function handleDraw(string $input, int $score): bool
+    public function handleDraw(string $input): bool
     {
         // 前後のスペース削除
         $select = trim($input, "\t\n\r\0\x0B");
 
-        if ($select === 'Y' && $score <= self::GAME_COUNT) {
+        if ($select === 'Y') {
             return true;
         } else {
             return false;

@@ -12,6 +12,7 @@ require_once(__DIR__ . '/ThreePlayerRuleClass.php');
 class Game
 {
     private $PlayerInt = 1;
+    private const MATCH_POINT = 21;
 
     public function __construct($players)
     {
@@ -39,14 +40,15 @@ class Game
         while (true) {
             $input = $this->displayHandleDraw($PlayerArr[0]);
 
-            if ($PlayerArr[0]->handleDraw($input, $PlayerArr[0]->getScore())) {
+            if ($PlayerArr[0]->handleDraw($input) ) {
                 $PlayerDrawCards = $PlayerArr[0]->drawCards($PlayerArr[0]);
                 $this->displayCards($PlayerDrawCards, $rule);
                 #カードの判定
                 $PlayerCheckHand = new HandEvaluator($rule);
                 $PlayerCheckHand->checkOver($PlayerArr);
-                
-            } elseif ($PlayerArr[0]->handleDraw($input, $PlayerArr[0]->getScore()) === false) {
+            } elseif ($PlayerArr[0]->handleDraw($input) === false || $PlayerArr[0]->getScore() > self::MATCH_POINT) {
+                echo 'Nの処理';
+                exit;
                 array_shift($PlayerSliceArr);
                 foreach ($PlayerSliceArr as $player) {
                     $player->eachDrawCards($player);
@@ -57,6 +59,7 @@ class Game
                 break;
             }
         }
+
         
         // 結果判定処理
         $resulut = new HandEvaluator($rule);
@@ -104,5 +107,5 @@ class Game
 
 
 
-$game = new Game(1);
+$game = new Game(2);
 $game->startGame();
