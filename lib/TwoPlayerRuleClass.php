@@ -10,14 +10,12 @@ class TwoPlayerRule implements Rule
     public function checkOver(array $PlayerArr): void
     {
         #　アクティブプレイヤーをセット
-        $this->ActivePlayers = $PlayerArr;
+        $this->setActivePlayers($PlayerArr);
         
         if ($PlayerArr[0]->getName() === 'player' && $PlayerArr[0]->getScore() > self::MATCH_POINT) {
-            
             $this->displayResult($PlayerArr, 'ディーラー');
             exit;
         } elseif ($PlayerArr[1]->getName() === 'dealer' && $PlayerArr[1]->getScore() > self::MATCH_POINT) {
-            
             $this->displayResult($PlayerArr, 'あなた');
             exit;
         }
@@ -57,9 +55,14 @@ class TwoPlayerRule implements Rule
         exit;
     }
 
-    public function getActivePlayers()
+    public function getActivePlayers(): array
     {
         return $this->ActivePlayers;
+    }
+
+    public function setActivePlayers(array $PlayerArr): void
+    {
+        $this->ActivePlayers = $PlayerArr;
     }
 
     public function displayResult($PlayerArr, string $winner): void
