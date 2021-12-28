@@ -7,7 +7,9 @@ class ThreePlayerRule implements Rule
     private const MATCH_POINT = 21;
     private $ActivePlayers = [];
     private $DealerStatus = false;
-    private $DealerScore = 0;
+    private $PlayerScore = '';
+    private $Player2Score = '';
+    private $DealerScore = '';
     
 
     public function checkOver(array $PlayerArr): void
@@ -46,56 +48,81 @@ class ThreePlayerRule implements Rule
             if ($player->getName() === 'player') {
                 echo 'あなたの得点は' . $player->getScore() . 'です' . PHP_EOL;
                 $ScoreArr['あなた'] = $diff;
+                $this->PlayerScore = $player->getScore();
             }
             if ($player->getName() === 'player2') {
                 echo 'プレイヤー2の得点は' . $player->getScore() . 'です' . PHP_EOL;
                 $ScoreArr['プレイヤー2'] = $diff;
+                $this->Player2Score = $player->getScore();
             }
             if ($player->getName() === 'dealer') {
                 echo 'ディーラーの得点は' . $player->getScore() . 'です' . PHP_EOL;
                 $ScoreArr['ディーラー'] = $diff;
+                $this->DealerScore = $player->getScore();
+                $this->DealerStatus = true;
             }
         }
         
-        $MinPlayers = array_keys($ScoreArr, min($ScoreArr));
-        
-        
-        if (count($MinPlayers) === 1) {
-            echo '勝者は' . $MinPlayers[0] . 'です！' . PHP_EOL;
-        } elseif (count($PlayerArr) === 2 && $MinPlayers[1] === 'dealer') {
-            echo $MinPlayers[0] . 'と' . $MinPlayers[1] . 'は引き分けです';
-        } elseif (count($PlayerArr) === 3) {
-
+        // 全員バーストしたら終了
+        if (count($PlayerArr) === 0) {
+            echo '全員バーストしたので引き分けです' . PHP_EOL;
+            exit;
         }
 
+        if ($this->DealerStatus) {
+            # ディーラーが存在した時
+            if (count($PlayerArr) === 1) {
+                echo 'ディーラーの勝利です' . PHP_EOL;
+            } elseif (count($PlayerArr) === 2 && $PlayerArr[0]->getName() === 'player') {
+                if ($PlayerArr[0]->getScore() > $this->DealerScore) {
+                    echo 'あなたの勝利です' . PHP_EOL;
+                } elseif ($PlayerArr[0]->getScore() < $this->DealerScore) {
+                    echo 'ディーラーはあなたに勝利しました' . PHP_EOL;
+                } elseif ($PlayerArr[0]->getScore() === $this->DealerScore) {
+                    echo 'あなたとディーラーは引き分けです' . PHP_EOL;
+                }
+            } elseif (count($PlayerArr) === 2 && $PlayerArr[0]->getName() === 'player2') {
+                if ($PlayerArr[0]->getScore() > $this->DealerScore) {
+                    echo 'プレイヤー2の勝利です' . PHP_EOL;
+                } elseif ($PlayerArr[0]->getScore() < $this->DealerScore) {
+                    echo 'ディーラーはプレイヤー2に勝利しました' . PHP_EOL;
+                } elseif ($PlayerArr[0]->getScore() === $this->DealerScore) {
+                    echo 'プレイヤー2とディーラーは引き分けです' . PHP_EOL;
+                }
+            } elseif (count($PlayerArr) === 3) {
+                $SliceArr = $PlayerArr;
+                // ディーラー削除
+                array_pop($SliceArr);
+
+                foreach ($SliceArr as $player) {
+                    if ($player->getName() === 'player') {
+                        if ($player->getScore() > $this->DealerScore) {
+                            echo 'あなたの勝利です' . PHP_EOL;
+                        } elseif ($player->getScore() < $this->DealerScore) {
+                            echo 'ディーラーはあなたに勝利しました' . PHP_EOL;
+                        }
+                    } elseif ($player->getName() === 'player2') {
+                        if ($player->getScore() > $this->DealerScore) {
+                            echo 'プレイヤー2の勝利です' . PHP_EOL;
+                        } elseif ($player->getScore() < $this->DealerScore) {
+                            echo 'ディーラーはプレイヤー2に勝利しました' . PHP_EOL;
+                        }
+                    }
+                }
+            }
+
+        } elseif (!$this->DealerStatus) {
+            # ディーラーが存在しない時
+            foreach ($PlayerArr as $player) {
+                if ($player->getName() === 'player') {
+                    echo 'あなたは勝利しました' . PHP_EOL;
+                } elseif ($player->getName() === 'player2') {
+                    echo 'プレイヤー2は勝利しました' . PHP_EOL;
+                }
+            }
+        }
         
 
-        // if (count($MinPlayers) === 1) {
-        //     echo '勝者は' . $MinPlayers[0] . 'です！' . PHP_EOL;
-        // } elseif (count($MinPlayers) === 2 && $MinPlayers[1] === 'dealer') {
-        //     echo $MinPlayers[0] . 'と' . $MinPlayers[1] . 'は引き分けです' . PHP_EOL;
-        // } elseif (count($MinPlayers) === 2 && $MinPlayers[1] !== 'dealer') {
-        //     echo '勝者は' . $MinPlayers[0] . 'と' . $MinPlayers[1] . 'です' . PHP_EOL;
-        // } elseif (count($MinPlayers) === 3 && $PlayerArr[0]->getScore() === $PlayerArr[1]->getScore()) {
-        //     echo '勝者は' . $MinPlayers[0] . 'と' . $MinPlayers[1] . 'です' . PHP_EOL;
-        // } else {
-        //     echo '全員バーストしたので引き分けです' . PHP_EOL;
-        // }
-
-        
-         
-
-        // if (count($MinPlayers) === 1) {
-        //     echo '勝者は' . $MinPlayers[0] . 'です！' . PHP_EOL;
-        // } elseif (count($MinPlayers) === 2 && $MinPlayers[0] !== 'dealer' || $MinPlayers[1] !== 'dealer') {
-        //     echo '勝者は' . $MinPlayers[0] . 'と' . $MinPlayers[1] . 'です' . PHP_EOL;
-        // } elseif (count($MinPlayers) === 2 && $MinPlayers[0] === 'dealer' || $MinPlayers[1] === 'dealer') {
-        //     echo $MinPlayers[0] . 'と' . $MinPlayers[1] . 'は引き分けです' . PHP_EOL;
-        // } elseif (count($MinPlayers) === 3) {
-        //     echo 'この勝負引き分けです' . PHP_EOL;
-        // } else {
-        //     echo '全員バーストしたので引き分けです' . PHP_EOL;
-        // }
         exit;
     }
 
