@@ -121,8 +121,6 @@ class ThreePlayerRule implements Rule
                 }
             }
         }
-        
-
         exit;
     }
 

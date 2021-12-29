@@ -23,7 +23,7 @@ class Game
     {
         # インスタンス生成
         $PlayerArr = $this->setPlayers();
-        # ルールセット
+        # ルール取得
         $rule = $this->getRule();
         
         echo 'ブラックジャックを開始します' . PHP_EOL;
