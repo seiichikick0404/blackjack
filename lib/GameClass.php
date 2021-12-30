@@ -1,4 +1,5 @@
 <?php
+
 namespace BlackJack\lib;
 
 require_once(__DIR__ . '/PlayerClass.php');
@@ -25,20 +26,20 @@ class Game
         $PlayerArr = $this->setPlayers();
         # ルール取得
         $rule = $this->getRule();
-        
+
         echo 'ブラックジャックを開始します' . PHP_EOL;
 
         #初回ドロー
-        foreach($PlayerArr as $player) {
+        foreach ($PlayerArr as $player) {
             $PlayerFirstDrawCards = $player->firstDrawCards($player);
             $this->displayCards($PlayerFirstDrawCards, $rule);
         }
-        
+
         // カードを引くか判定
         while (true) {
             $input = $this->displayHandleDraw($PlayerArr[0]);
-            
-            if ($PlayerArr[0]->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') { 
+
+            if ($PlayerArr[0]->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') {
                 $PlayerDrawCards = $PlayerArr[0]->drawCards($PlayerArr[0]);
                 $this->displayCards($PlayerDrawCards, $rule);
                 #カードの判定
@@ -70,14 +71,14 @@ class Game
         // 結果判定処理
         $resulut = new HandEvaluator($rule);
         $resulut->checkWinner($this->ActivePlayers);
-        exit;    
+        exit;
     }
 
     public function displayCards(array $DrawCards, $rule): void
     {
         $rule->displayDrawCards($DrawCards);
     }
-    
+
     public function displayHandleDraw(Player $player): string
     {
         if ($this->ActivePlayers[0]->getName() === 'player') {
@@ -94,10 +95,9 @@ class Game
             $input = trim($input, "\t\n\r\0\x0B");
             return $input;
         }
-       
     }
 
-    public function updateActivePlayers($rule)
+    public function updateActivePlayers($rule): void
     {
         $this->ActivePlayers = $rule->getActivePlayers();
     }

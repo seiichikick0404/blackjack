@@ -1,5 +1,7 @@
 <?php
+
 namespace BlackJack\lib;
+
 require_once(__DIR__ . '/RuleInterface.php');
 
 class TwoPlayerRule implements Rule
@@ -11,7 +13,7 @@ class TwoPlayerRule implements Rule
     {
         #　アクティブプレイヤーをセット
         $this->setActivePlayers($PlayerArr);
-        
+
         if ($PlayerArr[0]->getName() === 'player' && $PlayerArr[0]->getScore() > self::MATCH_POINT) {
             $this->displayResult($PlayerArr, 'ディーラー');
             exit;
@@ -43,9 +45,9 @@ class TwoPlayerRule implements Rule
                 $ScoreArr['ディーラー'] = $diff;
             }
         }
-        
+
         $MinPlayers = array_keys($ScoreArr, min($ScoreArr));
-        
+
         // 勝敗判定
         if (count($MinPlayers) === 1) {
             echo '勝者は' . $MinPlayers[0] . 'です！' . PHP_EOL;
@@ -53,16 +55,6 @@ class TwoPlayerRule implements Rule
             echo 'この勝負引き分けです' . PHP_EOL;
         }
         exit;
-    }
-
-    public function getActivePlayers(): array
-    {
-        return $this->ActivePlayers;
-    }
-
-    public function setActivePlayers(array $PlayerArr): void
-    {
-        $this->ActivePlayers = $PlayerArr;
     }
 
     public function displayResult($PlayerArr, string $winner): void
@@ -81,7 +73,7 @@ class TwoPlayerRule implements Rule
 
     public function displayDrawCards(array $DrawCards): void
     {
-       if (count($DrawCards) === 2 && $DrawCards['name'] === 'player') {
+        if (count($DrawCards) === 2 && $DrawCards['name'] === 'player') {
             #通常ドロー プレイヤー
             echo 'あなたの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
         } elseif (count($DrawCards) === 2 && $DrawCards['name'] === 'dealer') {
@@ -99,6 +91,16 @@ class TwoPlayerRule implements Rule
         } else {
             echo '条件に当てはまりません。処理を終了します' . PHP_EOL;
             exit;
-        } 
+        }
+    }
+
+    public function getActivePlayers(): array
+    {
+        return $this->ActivePlayers;
+    }
+
+    public function setActivePlayers(array $PlayerArr): void
+    {
+        $this->ActivePlayers = $PlayerArr;
     }
 }

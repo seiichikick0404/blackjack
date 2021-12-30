@@ -1,4 +1,5 @@
 <?php
+
 namespace BlackJack\lib;
 
 require_once(__DIR__ . '/UserInterface.php');
@@ -18,12 +19,12 @@ class Dealer implements UserInterface
         // スコアに加算
         if ($DrawCards[0]['prim'] === 'A' || $DrawCards[1]['prim'] === 'A') {
             $this->handleScore($dealer, $DrawCards);
-            $DrawCards['name'] = $this->name; 
-        } else {
-            $this->score += $DrawCards[0]['rank']; 
+            $DrawCards['name'] = $this->name;
+        } elseif ($DrawCards[0]['prim'] !== 'A' && $DrawCards[1]['prim'] !== 'A') {
+            $this->score += $DrawCards[0]['rank'];
             $this->score += $DrawCards[1]['rank'];
             // 配列にname追加
-            $DrawCards['name'] = $this->name; 
+            $DrawCards['name'] = $this->name;
         }
 
         return $DrawCards;
@@ -35,14 +36,14 @@ class Dealer implements UserInterface
         $card->randomCard();
         $DrawCards = $card->getDrawCards();
         //スコアに加算
-        $this->score += $DrawCards[0]['rank']; 
+        $this->score += $DrawCards[0]['rank'];
         // 配列にname追加
-        $DrawCards['name'] = $this->name; 
-        
+        $DrawCards['name'] = $this->name;
+
         return $DrawCards;
     }
 
-    public function  eachDrawCards(UserInterface $dealer): void
+    public function eachDrawCards(UserInterface $dealer): void
     {
         while ($this->getScore() <= self::GAME_COUNT) {
             $card = new Card();
@@ -51,12 +52,12 @@ class Dealer implements UserInterface
             //スコアに加算
             if ($DrawCards[0]['prim'] === 'A') {
                 $this->handleScore($dealer, $DrawCards);
-                $DrawCards['name'] = $this->name; 
+                $DrawCards['name'] = $this->name;
             } else {
                 $this->score += $DrawCards[0]['rank'];
-                $DrawCards['name'] = $this->name; 
+                $DrawCards['name'] = $this->name;
             }
-            
+
             echo 'ディーラーの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
             echo 'ディーラーの現在の得点は' . $dealer->getScore() . 'です' . PHP_EOL;
         }
@@ -104,9 +105,3 @@ class Dealer implements UserInterface
         return $this->name;
     }
 }
-
-// 以下テスト
-// $dealer = new Dealer();
-// $DrawCards = $dealer->EachDrawCards($dealer);
-// var_dump($dealer->getScore());
-// exit;

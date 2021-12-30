@@ -1,4 +1,5 @@
 <?php
+
 namespace BlackJack\lib;
 
 interface Rule

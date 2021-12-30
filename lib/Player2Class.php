@@ -1,4 +1,5 @@
 <?php
+
 namespace BlackJack\lib;
 
 require_once(__DIR__ . '/UserInterface.php');
@@ -19,12 +20,12 @@ class Player2 implements UserInterface
         // スコアに加算
         if ($DrawCards[0]['prim'] === 'A' || $DrawCards[1]['prim'] === 'A') {
             $this->handleScore($player, $DrawCards);
-            $DrawCards['name'] = $this->name; 
+            $DrawCards['name'] = $this->name;
         } else {
-            $this->score += $DrawCards[0]['rank']; 
+            $this->score += $DrawCards[0]['rank'];
             $this->score += $DrawCards[1]['rank'];
             // 配列にname追加
-            $DrawCards['name'] = $this->name; 
+            $DrawCards['name'] = $this->name;
         }
 
         return $DrawCards;
@@ -38,17 +39,17 @@ class Player2 implements UserInterface
         //スコアに加算
         if ($DrawCards[0]['prim'] === 'A') {
             $this->handleScore($player, $DrawCards);
-            $DrawCards['name'] = $this->name; 
+            $DrawCards['name'] = $this->name;
         } else {
-            $this->score += $DrawCards[0]['rank']; 
+            $this->score += $DrawCards[0]['rank'];
             // 配列にname追加
-            $DrawCards['name'] = $this->name; 
+            $DrawCards['name'] = $this->name;
         }
-        
+
         return $DrawCards;
     }
 
-    public function  eachDrawCards(UserInterface $player2): void
+    public function eachDrawCards(UserInterface $player2): void
     {
         while ($this->getScore() <= self::GAME_COUNT) {
             $card = new Card();
@@ -57,12 +58,12 @@ class Player2 implements UserInterface
             //スコアに加算
             if ($DrawCards[0]['prim'] === 'A') {
                 $this->handleScore($player2, $DrawCards);
-                $DrawCards['name'] = $this->name; 
+                $DrawCards['name'] = $this->name;
             } else {
                 $this->score += $DrawCards[0]['rank'];
-                $DrawCards['name'] = $this->name; 
+                $DrawCards['name'] = $this->name;
             }
-            
+
             echo 'プレイヤー2の引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
             echo 'プレイヤー2の現在の得点は' . $player2->getScore() . 'です' . PHP_EOL;
         }
@@ -122,11 +123,3 @@ class Player2 implements UserInterface
         return $this->name;
     }
 }
-
-// 以下テスト
-// $player = new Player();
-// $DrawCards = $player->drawCards($player);
-// var_dump($DrawCards) . PHP_EOL;
-// var_dump($player->getScore());
-// exit;
-

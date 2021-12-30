@@ -1,4 +1,5 @@
 <?php
+
 namespace BlackJack\lib;
 
 require_once(__DIR__ . '/PlayerClass.php');
@@ -263,7 +264,6 @@ class Card
             'rank' => 1,
             'type' => 'クラブ'
         ]
-        
     ];
 
     private $CardArr = [];
@@ -271,18 +271,17 @@ class Card
 
     public function randomTwoCard(): void
     {
-        $array_key = (array_rand(self::CARD_RANKS, 2));
+        $ArrayKey = (array_rand(self::CARD_RANKS, 2));
 
-        foreach ($array_key as $key)
-        {
+        foreach ($ArrayKey as $key) {
             $this->CardArr[] = self::CARD_RANKS[$key];
         }
     }
 
     public function randomCard(): void
     {
-        $array_key = (array_rand(self::CARD_RANKS, 1));
-        $this->CardArr[] = self::CARD_RANKS[$array_key];
+        $ArrayKey = (array_rand(self::CARD_RANKS, 1));
+        $this->CardArr[] = self::CARD_RANKS[$ArrayKey];
     }
 
     public function getDrawCards()
@@ -290,6 +289,3 @@ class Card
         return $this->CardArr;
     }
 }
-
-$test = new Card;
-$test->randomCard();

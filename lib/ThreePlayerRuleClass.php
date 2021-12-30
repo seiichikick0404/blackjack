@@ -1,5 +1,7 @@
 <?php
+
 namespace BlackJack\lib;
+
 require_once(__DIR__ . '/RuleInterface.php');
 
 class ThreePlayerRule implements Rule
@@ -10,7 +12,7 @@ class ThreePlayerRule implements Rule
     private $PlayerScore = '';
     private $Player2Score = '';
     private $DealerScore = '';
-    
+
 
     public function checkOver(array $PlayerArr): void
     {
@@ -62,7 +64,7 @@ class ThreePlayerRule implements Rule
                 $this->DealerStatus = true;
             }
         }
-        
+
         // 全員バーストしたら終了
         if (count($PlayerArr) === 0) {
             echo '全員バーストしたので引き分けです' . PHP_EOL;
@@ -110,7 +112,6 @@ class ThreePlayerRule implements Rule
                     }
                 }
             }
-
         } elseif (!$this->DealerStatus) {
             # ディーラーが存在しない時
             foreach ($PlayerArr as $player) {
@@ -122,16 +123,6 @@ class ThreePlayerRule implements Rule
             }
         }
         exit;
-    }
-
-    public function getActivePlayers()
-    {
-        return $this->ActivePlayers;
-    }
-
-    public function setActivePlayers(array $PlayerArr): void
-    {
-        $this->ActivePlayers = $PlayerArr;
     }
 
     public function displayResult($PlayerArr, string $winner): void
@@ -153,7 +144,7 @@ class ThreePlayerRule implements Rule
 
     public function displayDrawCards(array $DrawCards): void
     {
-       if (count($DrawCards) === 2 && $DrawCards['name'] === 'player') {
+        if (count($DrawCards) === 2 && $DrawCards['name'] === 'player') {
             #通常ドロー プレイヤー
             echo 'あなたの引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
         } elseif (count($DrawCards) === 2 && $DrawCards['name'] === 'player2') {
@@ -178,6 +169,16 @@ class ThreePlayerRule implements Rule
         } else {
             echo '条件に当てはまりません。処理を終了します' . PHP_EOL;
             exit;
-        } 
+        }
+    }
+
+    public function getActivePlayers()
+    {
+        return $this->ActivePlayers;
+    }
+
+    public function setActivePlayers(array $PlayerArr): void
+    {
+        $this->ActivePlayers = $PlayerArr;
     }
 }
