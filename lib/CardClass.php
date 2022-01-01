@@ -271,17 +271,17 @@ class Card
 
     public function randomTwoCard(): void
     {
-        $ArrayKey = (array_rand(self::CARD_RANKS, 2));
+        $arrayKey = (array_rand(self::CARD_RANKS, 2));
 
-        foreach ($ArrayKey as $key) {
+        foreach ($arrayKey as $key) {
             $this->CardArr[] = self::CARD_RANKS[$key];
         }
     }
 
     public function randomCard(): void
     {
-        $ArrayKey = (array_rand(self::CARD_RANKS, 1));
-        $this->CardArr[] = self::CARD_RANKS[$ArrayKey];
+        $arrayKey = (array_rand(self::CARD_RANKS, 1));
+        $this->CardArr[] = self::CARD_RANKS[$arrayKey];
     }
 
     public function getDrawCards()

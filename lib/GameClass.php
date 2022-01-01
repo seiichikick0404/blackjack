@@ -23,36 +23,36 @@ class Game
     public function startGame()
     {
         # インスタンス生成
-        $PlayerArr = $this->setPlayers();
+        $playerArr = $this->setPlayers();
         # ルール取得
         $rule = $this->getRule();
 
         echo 'ブラックジャックを開始します' . PHP_EOL;
 
         #初回ドロー
-        foreach ($PlayerArr as $player) {
-            $PlayerFirstDrawCards = $player->firstDrawCards($player);
-            $this->displayCards($PlayerFirstDrawCards, $rule);
+        foreach ($playerArr as $player) {
+            $playerFirstDrawCards = $player->firstDrawCards($player);
+            $this->displayCards($playerFirstDrawCards, $rule);
         }
 
         // カードを引くか判定
         while (true) {
-            $input = $this->displayHandleDraw($PlayerArr[0]);
+            $input = $this->displayHandleDraw($playerArr[0]);
 
-            if ($PlayerArr[0]->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') {
-                $PlayerDrawCards = $PlayerArr[0]->drawCards($PlayerArr[0]);
-                $this->displayCards($PlayerDrawCards, $rule);
+            if ($playerArr[0]->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') {
+                $playerDrawCards = $playerArr[0]->drawCards($playerArr[0]);
+                $this->displayCards($playerDrawCards, $rule);
                 #カードの判定
-                $PlayerCheckHand = new HandEvaluator($rule);
-                $PlayerCheckHand->checkOver($PlayerArr);
+                $playerCheckHand = new HandEvaluator($rule);
+                $playerCheckHand->checkOver($playerArr);
                 # アクティブプレイヤー更新
                 $this->updateActivePlayers($rule);
-            } elseif ($PlayerArr[0]->handleDraw($input) === false || $this->ActivePlayers[0]->getName() !== 'player') {
+            } elseif ($playerArr[0]->handleDraw($input) === false || $this->ActivePlayers[0]->getName() !== 'player') {
                 if ($this->ActivePlayers[0]->getName() === 'player') {
                     # 配列からプレイヤーを削除
-                    $PlayerSliceArr = $this->ActivePlayers;
-                    array_shift($PlayerSliceArr);
-                    $players = $PlayerSliceArr;
+                    $playerSliceArr = $this->ActivePlayers;
+                    array_shift($playerSliceArr);
+                    $players = $playerSliceArr;
                 } else {
                     $players = $this->ActivePlayers;
                 }
@@ -60,8 +60,8 @@ class Game
                 foreach ($players as $player) {
                     $player->eachDrawCards($player);
                     #カードの判定
-                    $PlayerCheckHand = new HandEvaluator($rule);
-                    $PlayerCheckHand->checkOver($this->ActivePlayers);
+                    $playerCheckHand = new HandEvaluator($rule);
+                    $playerCheckHand->checkOver($this->ActivePlayers);
                     $this->updateActivePlayers($rule);
                 }
                 break;
@@ -74,9 +74,9 @@ class Game
         exit;
     }
 
-    public function displayCards(array $DrawCards, $rule): void
+    public function displayCards(array $drawCards, $rule): void
     {
-        $rule->displayDrawCards($DrawCards);
+        $rule->displayDrawCards($drawCards);
     }
 
     public function displayHandleDraw(Player $player): string

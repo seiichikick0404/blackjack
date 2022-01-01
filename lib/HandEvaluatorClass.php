@@ -14,13 +14,13 @@ class HandEvaluator
         $this->rule = $rule;
     }
 
-    public function checkOver(array $PlayerArr): void
+    public function checkOver(array $playerArr): void
     {
-        $this->rule->checkOver($PlayerArr);
+        $this->rule->checkOver($playerArr);
     }
 
-    public function checkWinner(array $PlayerArr): void
+    public function checkWinner(array $playerArr): void
     {
-        $this->rule->checkWinner($PlayerArr);
+        $this->rule->checkWinner($playerArr);
     }
 }

@@ -4,7 +4,18 @@ namespace BlackJack\lib;
 
 interface UserInterface
 {
-    public function firstDrawCards($user);
-    public function drawCards($user);
-    public function getScore();
+    /**
+     * firstDrawCards
+     * @param UserInterface $user
+     * @return array<int>
+     */
+    public function firstDrawCards(UserInterface $user): array;
+
+    /**
+     * drawCards
+     * @param UserInterface $user
+     * @return array<int>
+     */
+    public function drawCards(UserInterface $user): array;
+    public function getScore(): int;
 }

@@ -16,37 +16,37 @@ class Player2 implements UserInterface
     {
         $card = new Card();
         $card->randomTwoCard();
-        $DrawCards = $card->getDrawCards();
+        $drawCards = $card->getDrawCards();
         // スコアに加算
-        if ($DrawCards[0]['prim'] === 'A' || $DrawCards[1]['prim'] === 'A') {
-            $this->handleScore($player, $DrawCards);
-            $DrawCards['name'] = $this->name;
+        if ($drawCards[0]['prim'] === 'A' || $drawCards[1]['prim'] === 'A') {
+            $this->handleScore($player, $drawCards);
+            $drawCards['name'] = $this->name;
         } else {
-            $this->score += $DrawCards[0]['rank'];
-            $this->score += $DrawCards[1]['rank'];
+            $this->score += $drawCards[0]['rank'];
+            $this->score += $drawCards[1]['rank'];
             // 配列にname追加
-            $DrawCards['name'] = $this->name;
+            $drawCards['name'] = $this->name;
         }
 
-        return $DrawCards;
+        return $drawCards;
     }
 
-    public function drawCards($player)
+    public function drawCards($player): array
     {
         $card = new Card();
         $card->randomCard();
-        $DrawCards = $card->getDrawCards();
+        $drawCards = $card->getDrawCards();
         //スコアに加算
-        if ($DrawCards[0]['prim'] === 'A') {
-            $this->handleScore($player, $DrawCards);
-            $DrawCards['name'] = $this->name;
+        if ($drawCards[0]['prim'] === 'A') {
+            $this->handleScore($player, $drawCards);
+            $drawCards['name'] = $this->name;
         } else {
-            $this->score += $DrawCards[0]['rank'];
+            $this->score += $drawCards[0]['rank'];
             // 配列にname追加
-            $DrawCards['name'] = $this->name;
+            $drawCards['name'] = $this->name;
         }
 
-        return $DrawCards;
+        return $drawCards;
     }
 
     public function eachDrawCards(UserInterface $player2): void
@@ -54,17 +54,17 @@ class Player2 implements UserInterface
         while ($this->getScore() <= self::GAME_COUNT) {
             $card = new Card();
             $card->randomCard();
-            $DrawCards = $card->getDrawCards();
+            $drawCards = $card->getDrawCards();
             //スコアに加算
-            if ($DrawCards[0]['prim'] === 'A') {
-                $this->handleScore($player2, $DrawCards);
-                $DrawCards['name'] = $this->name;
+            if ($drawCards[0]['prim'] === 'A') {
+                $this->handleScore($player2, $drawCards);
+                $drawCards['name'] = $this->name;
             } else {
-                $this->score += $DrawCards[0]['rank'];
-                $DrawCards['name'] = $this->name;
+                $this->score += $drawCards[0]['rank'];
+                $drawCards['name'] = $this->name;
             }
 
-            echo 'プレイヤー2の引いたカードは' . $DrawCards[0]['type'] . 'の' . $DrawCards[0]['prim'] . 'です' . PHP_EOL;
+            echo 'プレイヤー2の引いたカードは' . $drawCards[0]['type'] . 'の' . $drawCards[0]['prim'] . 'です' . PHP_EOL;
             echo 'プレイヤー2の現在の得点は' . $player2->getScore() . 'です' . PHP_EOL;
         }
     }
@@ -81,31 +81,31 @@ class Player2 implements UserInterface
         }
     }
 
-    public function handleScore($player, $DrawCards)
+    public function handleScore($player, $drawCards): void
     {
-        $MaxScore = $player->getScore() + 11;
-        $arrCount = count($DrawCards);
+        $maxScore = $player->getScore() + 11;
+        $arrCount = count($drawCards);
 
 
         if ($arrCount === 2) {
             #初回ドロー
-            if ($DrawCards[0]['prim'] === 'A' && $DrawCards[1]['prim'] !== 'A') {
+            if ($drawCards[0]['prim'] === 'A' && $drawCards[1]['prim'] !== 'A') {
                 $this->score += 11;
-                $this->score += $DrawCards[1]['rank'];
-            } elseif ($DrawCards[0]['prim'] !== 'A' && $DrawCards[1]['prim'] === 'A') {
+                $this->score += $drawCards[1]['rank'];
+            } elseif ($drawCards[0]['prim'] !== 'A' && $drawCards[1]['prim'] === 'A') {
                 $this->score += 11;
-                $this->score += $DrawCards[0]['rank'];
-            } elseif ($DrawCards[0]['prim'] === 'A' && $DrawCards[1]['prim'] === 'A') {
+                $this->score += $drawCards[0]['rank'];
+            } elseif ($drawCards[0]['prim'] === 'A' && $drawCards[1]['prim'] === 'A') {
                 $this->score += 11;
-                $this->score += $DrawCards[1]['rank'];
+                $this->score += $drawCards[1]['rank'];
             } else {
-                $this->score += $DrawCards[0]['rank'];
-                $this->score += $DrawCards[1]['rank'];
+                $this->score += $drawCards[0]['rank'];
+                $this->score += $drawCards[1]['rank'];
             }
         } elseif ($arrCount === 1) {
             #通常ドロー
-            $MaxScore = $player->getScore() + 11;
-            if ($MaxScore <= self::GAME_COUNT) {
+            $maxScore = $player->getScore() + 11;
+            if ($maxScore <= self::GAME_COUNT) {
                 $this->score += 11;
             } else {
                 $this->score += 1;
