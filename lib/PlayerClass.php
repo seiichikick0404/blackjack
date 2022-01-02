@@ -12,7 +12,12 @@ class Player implements UserInterface
     private $score = 0;
     private $name = 'player';
 
-    public function firstDrawCards($player): array
+    /**
+     * 初回ドロー
+     * @param UserInterface $player
+     * @return array $drawCards
+     */
+    public function firstDrawCards(UserInterface $player): array
     {
         $card = new Card();
         $card->randomTwoCard();
@@ -32,7 +37,12 @@ class Player implements UserInterface
         return $drawCards;
     }
 
-    public function drawCards($player): array
+    /**
+     * 通常ドロー
+     * @param UserInterface $player
+     * @return array $drawCards
+     */
+    public function drawCards(UserInterface $player): array
     {
         $card = new Card();
         $card->randomCard();
@@ -50,6 +60,11 @@ class Player implements UserInterface
         return $drawCards;
     }
 
+    /**
+     * ドローするか選択処理
+     * @param string $input
+     * @return bool
+     */
     public function handleDraw(string $input): bool
     {
         // 前後のスペース削除
@@ -62,7 +77,13 @@ class Player implements UserInterface
         }
     }
 
-    public function handleScore($player, $drawCards)
+    /**
+     * Aを引いた際の得点処理
+     * @param UserInterface $player
+     * @param array $drawCards
+     * @return void
+     */
+    public function handleScore(UserInterface $player, $drawCards)
     {
         $maxScore = $player->getScore() + 11;
         $arrCount = count($drawCards);
@@ -94,11 +115,19 @@ class Player implements UserInterface
         }
     }
 
+    /**
+     * スコア取得
+     * @return int $score
+     */
     public function getScore(): int
     {
         return $this->score;
     }
 
+    /**
+     * 名前の取得
+     * @return string $name
+     */
     public function getName()
     {
         return $this->name;

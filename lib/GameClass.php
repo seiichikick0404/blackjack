@@ -20,7 +20,11 @@ class Game
         $this->PlayerInt = $players;
     }
 
-    public function startGame()
+    /**
+     * ブラックジャック実行
+     * @return void
+     */
+    public function startGame(): void
     {
         # インスタンス生成
         $playerArr = $this->setPlayers();
@@ -74,11 +78,22 @@ class Game
         exit;
     }
 
-    public function displayCards(array $drawCards, $rule): void
+    /**
+     * 引いた手札の表示
+     * @param array $drawCards
+     * @param Rule $rule
+     * @return void
+     */
+    public function displayCards(array $drawCards, Rule $rule): void
     {
         $rule->displayDrawCards($drawCards);
     }
 
+    /**
+     * ドロー選択画面の表示
+     * @param Player $player
+     * @return string
+     */
     public function displayHandleDraw(Player $player): string
     {
         if ($this->ActivePlayers[0]->getName() === 'player') {
@@ -97,11 +112,20 @@ class Game
         }
     }
 
-    public function updateActivePlayers($rule): void
+    /**
+     * アクティブプレイヤーの更新
+     * @param Rule $rule
+     * @return void
+     */
+    public function updateActivePlayers(Rule $rule): void
     {
         $this->ActivePlayers = $rule->getActivePlayers();
     }
 
+    /**
+     * 参加プレイヤーのセット
+     * @return array
+     */
     public function setPlayers(): array
     {
         if ($this->PlayerInt === 1) {
@@ -118,7 +142,11 @@ class Game
         }
     }
 
-    public function getRule()
+    /**
+     * ルール取得
+     * @return Rule $rule
+     */
+    public function getRule(): object
     {
         if ($this->PlayerInt === 1) {
             $rule = new TwoPlayerRule();
