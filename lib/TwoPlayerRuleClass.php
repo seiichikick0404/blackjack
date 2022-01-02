@@ -11,7 +11,7 @@ class TwoPlayerRule implements Rule
 
     /**
      * バーストしたかをチェックします
-     * @param array
+     * @param array $playerArr
      * @return void
      */
     public function checkOver(array $playerArr): void
@@ -30,7 +30,7 @@ class TwoPlayerRule implements Rule
 
     /**
      * 勝敗を判定します
-     * @param array
+     * @param array $playerArr
      * @return void
      */
     public function checkWinner(array $playerArr): void
@@ -69,7 +69,7 @@ class TwoPlayerRule implements Rule
 
     /**
      * バースト時の勝敗表示です
-     * @param array
+     * @param array $playerArr
      * @param UserInterface $winner
      * @return void
      */
@@ -89,7 +89,7 @@ class TwoPlayerRule implements Rule
 
     /**
      * ドローしたカードの表示
-     * @param array
+     * @param array drawCards
      * @return void
      */
     public function displayDrawCards(array $drawCards): void
@@ -126,7 +126,7 @@ class TwoPlayerRule implements Rule
 
     /**
      * アクティブプレイヤーのセット
-     * @param array
+     * @param array $playerArr
      * @return void
      */
     public function setActivePlayers(array $playerArr): void
