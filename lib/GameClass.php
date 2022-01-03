@@ -159,6 +159,5 @@ class Game
 }
 
 
-
 $game = new Game(2);
 $game->startGame();
