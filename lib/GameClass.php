@@ -10,6 +10,7 @@ require_once(__DIR__ . '/RuleInterface.php');
 require_once(__DIR__ . '/TwoPlayerRuleClass.php');
 require_once(__DIR__ . '/ThreePlayerRuleClass.php');
 
+
 class Game
 {
     private $PlayerInt = 1;
@@ -159,5 +160,5 @@ class Game
 }
 
 
-$game = new Game(2);
-$game->startGame();
+// $game = new Game(2);
+// $game->startGame();
