@@ -35,6 +35,8 @@ class TwoPlayerRule implements Rule
      */
     public function checkWinner(array $playerArr): void
     {
+        echo '----------------- 結果 --------------------' . PHP_EOL;
+
         // 得点表示
         foreach ($playerArr as $player) {
             if ($player->getName() === 'player') {
@@ -75,6 +77,8 @@ class TwoPlayerRule implements Rule
      */
     public function displayResult($playerArr, string $winner): void
     {
+        echo '----------------- 結果 --------------------' . PHP_EOL;
+
         foreach ($playerArr as $player) {
             if ($player->getName() === 'player') {
                 echo 'あなたの得点は' . $player->getScore() . 'です' . PHP_EOL;
