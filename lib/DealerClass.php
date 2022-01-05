@@ -89,7 +89,6 @@ class Dealer implements UserInterface
         $maxScore = $dealer->getScore() + 11;
         $arrCount = count($drawCards);
 
-
         if ($arrCount === 2) {
             #初回ドロー
             if ($drawCards[0]['prim'] === 'A' && $drawCards[1]['prim'] !== 'A') {
