@@ -48,9 +48,6 @@ class TwoPlayerRuleTest extends TestCase
             ],
             'name' => 'dealer'
         ];
-
-        $player = new Player();
-        $dealer = new Dealer();
         
         // プレイヤー　初回ドロー
         $rule = new TwoPlayerRule();
