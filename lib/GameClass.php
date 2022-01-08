@@ -35,10 +35,7 @@ class Game
         echo 'ブラックジャックを開始します' . PHP_EOL;
 
         #初回ドロー
-        foreach ($playerArr as $player) {
-            $playerFirstDrawCards = $player->firstDrawCards($player);
-            $this->displayCards($playerFirstDrawCards, $rule);
-        }
+        $this->firstDraw($playerArr, $rule);
 
         // カードを引くか判定
         while (true) {
@@ -77,6 +74,20 @@ class Game
         $resulut = new HandEvaluator($rule);
         $resulut->checkWinner($this->ActivePlayers);
         exit;
+    }
+
+    /**
+     * 初回ドロー
+     * @param array $playerArr
+     * @param Rule $rule
+     * @return void
+     */
+    public function firstDraw($playerArr, $rule): void
+    {
+        foreach ($playerArr as $player) {
+            $playerFirstDrawCards = $player->firstDrawCards($player);
+            $this->displayCards($playerFirstDrawCards, $rule);
+        }
     }
 
     /**
