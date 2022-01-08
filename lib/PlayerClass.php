@@ -72,7 +72,7 @@ class Player implements UserInterface
 
         if ($select === 'Y') {
             return true;
-        } else {
+        } elseif ($select === 'N') {
             return false;
         }
     }

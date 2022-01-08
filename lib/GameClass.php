@@ -41,7 +41,7 @@ class Game
         while (true) {
             $input = $this->displayHandleDraw($playerArr[0]);
 
-            if ($playerArr[0]->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') {
+            if ($this->isHandleDraw($playerArr[0], $input)) {
                 $playerDrawCards = $playerArr[0]->drawCards($playerArr[0]);
                 $this->displayCards($playerDrawCards, $rule);
                 #カードの判定
@@ -49,7 +49,7 @@ class Game
                 $playerCheckHand->checkOver($playerArr);
                 # アクティブプレイヤー更新
                 $this->updateActivePlayers($rule);
-            } elseif ($playerArr[0]->handleDraw($input) === false || $this->ActivePlayers[0]->getName() !== 'player') {
+            } elseif (!$this->isHandleDraw($playerArr[0], $input)) {
                 if ($this->ActivePlayers[0]->getName() === 'player') {
                     # 配列からプレイヤーを削除
                     $playerSliceArr = $this->ActivePlayers;
@@ -111,16 +111,21 @@ class Game
         if ($this->ActivePlayers[0]->getName() === 'player') {
             echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
             $input = fgets(STDIN);
-            // 前後のスペース削除
-            $input = trim($input, "\t\n\r\0\x0B");
             return $input;
         } elseif ($this->ActivePlayers[0]->getName() !== 'player') {
             return 'N';
         } else {
             $input = fgets(STDIN);
-            // 前後のスペース削除
-            $input = trim($input, "\t\n\r\0\x0B");
             return $input;
+        }
+    }
+
+    public function isHandleDraw(Player $player, string $input)
+    {
+        if ($player->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') {
+            return true;
+        } elseif ($player->handleDraw($input) === false || $this->ActivePlayers[0]->getName() !== 'player') {
+            return false;
         }
     }
 
