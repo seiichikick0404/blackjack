@@ -31,6 +31,7 @@ class Game
         $playerArr = $this->setPlayers();
         # ルール取得
         $rule = $this->getRule();
+        $playerCheckHand = new HandEvaluator($rule);
 
         echo 'ブラックジャックを開始します' . PHP_EOL;
 
@@ -44,8 +45,7 @@ class Game
             if ($this->isHandleDraw($playerArr[0], $input)) {
                 $playerDrawCards = $playerArr[0]->drawCards($playerArr[0]);
                 $this->displayCards($playerDrawCards, $rule);
-                #カードの判定
-                $playerCheckHand = new HandEvaluator($rule);
+                # バースト判定判定
                 $playerCheckHand->checkOver($playerArr);
                 # アクティブプレイヤー更新
                 $this->updateActivePlayers($rule);
