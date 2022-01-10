@@ -50,7 +50,7 @@ class Game
                 # アクティブプレイヤー更新
                 $this->updateActivePlayers($rule);
             } elseif (!$this->isHandleDraw($playerArr[0], $input)) {
-                # プレイヤー以外のプレイヤーの取得
+                # プレイヤー以外の関数実行
                 $players = $this->getPlayerSliceArr($this->ActivePlayers);
                 // $playerCheckHand->eachDrawCards();
 
@@ -114,7 +114,12 @@ class Game
         }
     }
 
-    public function getPlayerSliceArr($activePlayers): array
+    /**
+     * プレイヤー以外のインスタンス配列を返す
+     * @param array $activePlayers
+     * @return array
+     */
+    public function getPlayerSliceArr(array $activePlayers): array
     {
         if ($this->ActivePlayers[0]->getName() === 'player') {
             # 配列からプレイヤーを削除
@@ -128,7 +133,13 @@ class Game
         return $players;
     }
 
-    public function isHandleDraw(Player $player, string $input)
+    /**
+     * カードを引くか引かないかの判定
+     * @param Player $player
+     * @param string $input
+     * @return bool
+     */
+    public function isHandleDraw(Player $player, string $input): bool
     {
         if ($player->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') {
             return true;
