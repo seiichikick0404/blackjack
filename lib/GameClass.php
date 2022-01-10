@@ -50,19 +50,13 @@ class Game
                 # アクティブプレイヤー更新
                 $this->updateActivePlayers($rule);
             } elseif (!$this->isHandleDraw($playerArr[0], $input)) {
-                if ($this->ActivePlayers[0]->getName() === 'player') {
-                    # 配列からプレイヤーを削除
-                    $playerSliceArr = $this->ActivePlayers;
-                    array_shift($playerSliceArr);
-                    $players = $playerSliceArr;
-                } else {
-                    $players = $this->ActivePlayers;
-                }
+                # プレイヤー以外のプレイヤーの取得
+                $players = $this->getPlayerSliceArr($this->ActivePlayers);
+                // $playerCheckHand->eachDrawCards();
 
                 foreach ($players as $player) {
                     $player->eachDrawCards($player);
                     #カードの判定
-                    $playerCheckHand = new HandEvaluator($rule);
                     $playerCheckHand->checkOver($this->ActivePlayers);
                     $this->updateActivePlayers($rule);
                 }
@@ -118,6 +112,20 @@ class Game
             $input = fgets(STDIN);
             return $input;
         }
+    }
+
+    public function getPlayerSliceArr($activePlayers): array
+    {
+        if ($this->ActivePlayers[0]->getName() === 'player') {
+            # 配列からプレイヤーを削除
+            $playerSliceArr = $this->ActivePlayers;
+            array_shift($playerSliceArr);
+            $players = $playerSliceArr;
+        } else {
+            $players = $this->ActivePlayers;
+        }
+
+        return $players;
     }
 
     public function isHandleDraw(Player $player, string $input)

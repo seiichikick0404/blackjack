@@ -4,6 +4,7 @@ namespace BlackJack\lib;
 
 require_once(__DIR__ . '/PlayerClass.php');
 require_once(__DIR__ . '/DealerClass.php');
+require_once(__DIR__ . '/UserInterface.php');
 
 class HandEvaluator
 {
@@ -38,4 +39,9 @@ class HandEvaluator
     {
         $this->rule->checkWinner($playerArr);
     }
+
+    // public function eachDrawCards(UserInterface $player)
+    // {
+    //     $player->eachDrawCards($player);
+    // }
 }
