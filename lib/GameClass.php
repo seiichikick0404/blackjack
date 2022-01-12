@@ -50,9 +50,8 @@ class Game
                 # アクティブプレイヤー更新
                 $this->updateActivePlayers($rule);
             } elseif (!$this->isHandleDraw($playerArr[0], $input)) {
-                # プレイヤー以外の関数実行
+                # プレイヤー以外の動作実行
                 $players = $this->getPlayerSliceArr($this->ActivePlayers);
-                // $playerCheckHand->eachDrawCards();
 
                 foreach ($players as $player) {
                     $player->eachDrawCards($player);
@@ -115,7 +114,7 @@ class Game
     }
 
     /**
-     * プレイヤー以外のインスタンス配列を返す
+     * プレイヤー以外の参加者インスタンス配列を返す
      * @param array $activePlayers
      * @return array
      */

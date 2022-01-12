@@ -39,9 +39,4 @@ class HandEvaluator
     {
         $this->rule->checkWinner($playerArr);
     }
-
-    // public function eachDrawCards(UserInterface $player)
-    // {
-    //     $player->eachDrawCards($player);
-    // }
 }
