@@ -16,14 +16,6 @@ class DealerTest extends TestCase
         $this->assertSame(3, count($dealer->firstDrawCards($dealer)));
     }
 
-    public function testDrawCards()
-    {
-        $dealer = new Dealer();
-
-        // カードを1枚ドローできてるか
-        $this->assertSame(2, count($dealer->drawCards($dealer)));
-    }
-
     public function testHandleScore()
     {
         $drawCards = [

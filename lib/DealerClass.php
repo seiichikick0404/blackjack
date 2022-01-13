@@ -4,8 +4,9 @@ namespace BlackJack\lib;
 
 require_once(__DIR__ . '/UserInterface.php');
 require_once(__DIR__ . '/CardClass.php');
+require_once(__DIR__ . '/PlayerOtherInterface.php');
 
-class Dealer implements UserInterface
+class Dealer implements PlayerOtherInterface
 {
     private const GAME_COUNT = 17;
     private $score = 0;
@@ -31,24 +32,6 @@ class Dealer implements UserInterface
             // 配列にname追加
             $drawCards['name'] = $this->name;
         }
-
-        return $drawCards;
-    }
-
-    /**
-     * 通常ドロー
-     * @param UserInterface $dealer
-     * @return array $drawCards
-     */
-    public function drawCards(UserInterface $dealer): array
-    {
-        $card = new Card();
-        $card->randomCard();
-        $drawCards = $card->getDrawCards();
-        //スコアに加算
-        $this->score += $drawCards[0]['rank'];
-        // 配列にname追加
-        $drawCards['name'] = $this->name;
 
         return $drawCards;
     }

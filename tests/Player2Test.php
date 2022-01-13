@@ -16,14 +16,6 @@ class Player2Test extends TestCase
         $this->assertSame(3, count($player->firstDrawCards($player)));
     }
 
-    public function testDrawCards()
-    {
-        $player = new Player2();
-
-        // カードを1枚ドローできてるか
-        $this->assertSame(2, count($player->drawCards($player)));
-    }
-
     public function testHandleScore()
     {
         $drawCards = [

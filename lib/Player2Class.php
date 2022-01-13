@@ -3,10 +3,11 @@
 namespace BlackJack\lib;
 
 require_once(__DIR__ . '/UserInterface.php');
+require_once(__DIR__ . '/PlayerOtherInterface.php');
 require_once(__DIR__ . '/CardClass.php');
 require_once(__DIR__ . '/HandEvaluatorClass.php');
 
-class Player2 implements UserInterface
+class Player2 implements PlayerOtherInterface
 {
     private const GAME_COUNT = 17;
     private $score = 0;
@@ -37,28 +38,10 @@ class Player2 implements UserInterface
     }
 
     /**
-     * 通常ドロー
-     * @param UserInterface $player
-     * @return array $drawCards
+     * 連続ドロー
+     * @param UserInterface $dealer
+     * @return void
      */
-    public function drawCards(UserInterface $player): array
-    {
-        $card = new Card();
-        $card->randomCard();
-        $drawCards = $card->getDrawCards();
-        //スコアに加算
-        if ($drawCards[0]['prim'] === 'A') {
-            $this->handleScore($player, $drawCards);
-            $drawCards['name'] = $this->name;
-        } else {
-            $this->score += $drawCards[0]['rank'];
-            // 配列にname追加
-            $drawCards['name'] = $this->name;
-        }
-
-        return $drawCards;
-    }
-
     public function eachDrawCards(UserInterface $player2): void
     {
         while ($this->getScore() <= self::GAME_COUNT) {
@@ -130,7 +113,7 @@ class Player2 implements UserInterface
      * 名前の取得
      * @return string $name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
