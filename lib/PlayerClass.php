@@ -5,6 +5,7 @@ namespace BlackJack\lib;
 require_once(__DIR__ . '/UserInterface.php');
 require_once(__DIR__ . '/CardClass.php');
 require_once(__DIR__ . '/HandEvaluatorClass.php');
+require_once(__DIR__ . '/DeckClass.php');
 
 class Player implements UserInterface
 {
@@ -19,22 +20,24 @@ class Player implements UserInterface
      */
     public function firstDrawCards(UserInterface $player): array
     {
-        $card = new Card();
-        $card->randomTwoCard();
-        $drawCards = $card->getDrawCards();
+        $deck = new Deck();
+        return $deck->firstDrawCards($player);
+        // $card = new Card();
+        // $card->randomTwoCard();
+        // $drawCards = $card->getDrawCards();
 
-        // スコアに加算
-        if ($drawCards[0]['prim'] === 'A' || $drawCards[1]['prim'] === 'A') {
-            $this->handleScore($player, $drawCards);
-            $drawCards['name'] = $this->name;
-        } else {
-            $this->score += $drawCards[0]['rank'];
-            $this->score += $drawCards[1]['rank'];
-            // 配列にname追加
-            $drawCards['name'] = $this->name;
-        }
+        // // スコアに加算
+        // if ($drawCards[0]['prim'] === 'A' || $drawCards[1]['prim'] === 'A') {
+        //     $this->handleScore($player, $drawCards);
+        //     $drawCards['name'] = $this->name;
+        // } else {
+        //     $this->score += $drawCards[0]['rank'];
+        //     $this->score += $drawCards[1]['rank'];
+        //     // 配列にname追加
+        //     $drawCards['name'] = $this->name;
+        // }
 
-        return $drawCards;
+        // return $drawCards;
     }
 
     /**

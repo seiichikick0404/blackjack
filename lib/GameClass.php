@@ -64,9 +64,9 @@ class Game
         }
 
         // 結果判定処理
-        $resulut = new HandEvaluator($rule);
-        $resulut->checkWinner($this->ActivePlayers);
-        exit;
+        // $resulut = new HandEvaluator($rule);
+        // $resulut->checkWinner($this->ActivePlayers);
+        // exit;
     }
 
     /**
