@@ -266,7 +266,7 @@ class Card
         ]
     ];
 
-    private $CardArr = [];
+    private array $cardArr = [];
 
     /**
      * ランダムでカードを2枚ドローします
@@ -277,7 +277,7 @@ class Card
         $arrayKey = (array_rand(self::CARD_RANKS, 2));
 
         foreach ($arrayKey as $key) {
-            $this->CardArr[] = self::CARD_RANKS[$key];
+            $this->cardArr[] = self::CARD_RANKS[$key];
         }
     }
 
@@ -287,15 +287,15 @@ class Card
     public function randomCard(): void
     {
         $arrayKey = (array_rand(self::CARD_RANKS, 1));
-        $this->CardArr[] = self::CARD_RANKS[$arrayKey];
+        $this->cardArr[] = self::CARD_RANKS[$arrayKey];
     }
 
     /**
      * ドローしたカードを取得します
-     * @return $CardArr
+     * @return $cardArr
      */
     public function getDrawCards(): array
     {
-        return $this->CardArr;
+        return $this->cardArr;
     }
 }

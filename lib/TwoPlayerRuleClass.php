@@ -7,7 +7,7 @@ require_once(__DIR__ . '/RuleInterface.php');
 class TwoPlayerRule implements Rule
 {
     private const MATCH_POINT = 21;
-    private $ActivePlayers = [];
+    private array $ActivePlayers = [];
 
     /**
      * バーストしたかをチェックします
@@ -75,7 +75,7 @@ class TwoPlayerRule implements Rule
      * @param UserInterface $winner
      * @return void
      */
-    public function displayResult($playerArr, string $winner): void
+    public function displayResult(array $playerArr, string $winner): void
     {
         echo '----------------- 結果 --------------------' . PHP_EOL;
 

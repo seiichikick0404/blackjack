@@ -9,8 +9,8 @@ require_once(__DIR__ . '/PlayerOtherInterface.php');
 class Dealer implements PlayerOtherInterface
 {
     private const GAME_COUNT = 17;
-    private $score = 0;
-    private $name = 'dealer';
+    private int $score = 0;
+    private string $name = 'dealer';
 
     /**
      * 初回ドロー
@@ -109,7 +109,7 @@ class Dealer implements PlayerOtherInterface
 
     /**
      * 名前の取得
-     * @return $name
+     * @return string $name
      */
     public function getName(): string
     {

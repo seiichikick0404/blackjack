@@ -9,9 +9,6 @@ class ThreePlayerRule implements Rule
     private const MATCH_POINT = 21;
     private $ActivePlayers = [];
     private $DealerStatus = false;
-    private $PlayerScore = '';
-    private $Player2Score = '';
-    private $DealerScore = '';
 
     /**
      * バーストしたかをチェックします
@@ -142,7 +139,7 @@ class ThreePlayerRule implements Rule
      * @param UserInterface $winner
      * @return void
      */
-    public function displayResult($playerArr, string $winner): void
+    public function displayResult(array $playerArr, string $winner): void
     {
         echo '----------------- 結果 --------------------' . PHP_EOL;
 

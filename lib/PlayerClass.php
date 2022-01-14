@@ -10,8 +10,8 @@ require_once(__DIR__ . '/HandEvaluatorClass.php');
 class Player implements PlayerInterface
 {
     private const GAME_COUNT = 21;
-    private $score = 0;
-    private $name = 'player';
+    private int $score = 0;
+    private string $name = 'player';
 
     /**
      * 初回ドロー
@@ -84,7 +84,7 @@ class Player implements PlayerInterface
      * @param array $drawCards
      * @return void
      */
-    public function handleScore(UserInterface $player, $drawCards)
+    public function handleScore(UserInterface $player, array $drawCards): void
     {
         $maxScore = $player->getScore() + 11;
         $arrCount = count($drawCards);

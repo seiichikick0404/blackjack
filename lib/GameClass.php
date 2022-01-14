@@ -13,8 +13,8 @@ require_once(__DIR__ . '/ThreePlayerRuleClass.php');
 
 class Game
 {
-    private $PlayerInt = 1;
-    private $ActivePlayers = [];
+    private int $PlayerInt = 1;
+    private array $ActivePlayers = [];
 
     public function __construct($players)
     {
@@ -97,7 +97,7 @@ class Game
     /**
      * ドロー選択画面の表示
      * @param Player $player
-     * @return string
+     * @return string $input
      */
     public function displayHandleDraw(Player $player): string
     {
@@ -116,7 +116,7 @@ class Game
     /**
      * プレイヤー以外の参加者インスタンス配列を返す
      * @param array $activePlayers
-     * @return array
+     * @return array $players
      */
     public function getPlayerSliceArr(array $activePlayers): array
     {
@@ -194,5 +194,5 @@ class Game
 }
 
 
-// $game = new Game(2);
-// $game->startGame();
+$game = new Game(2);
+$game->startGame();
