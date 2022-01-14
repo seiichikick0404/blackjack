@@ -8,12 +8,25 @@ require_once(__DIR__ . '/../lib/DealerClass.php');
 
 class DealerTest extends TestCase
 {
+    private const GAME_COUNT = 17;
+
     public function testFirstDrawCards()
     {
         $dealer = new Dealer();
 
         // カードを2枚ドローできてるか
         $this->assertSame(3, count($dealer->firstDrawCards($dealer)));
+
+        // 返り値が配列かチェック
+        $this->assertTrue(is_array($dealer->firstDrawCards($dealer)));
+    }
+
+    public function testEachDrawCards()
+    {
+        // スコアが17以上になるまでドローしてるかチェック
+        $dealer = new Dealer();
+        $dealer->eachDrawCards($dealer);
+        $this->assertGreaterThanOrEqual(self::GAME_COUNT, $dealer->getScore());
     }
 
     public function testHandleScore()
@@ -72,10 +85,16 @@ class DealerTest extends TestCase
         $this->assertSame(14, $dealer3->getScore());
     }
 
+    public function testGetScore()
+    {
+        // 数値かチェック
+        $dealer = new Dealer();
+        $this->assertTrue(is_numeric($dealer->getScore()));
+    }
+
     public function testGetName()
     {
         $dealer = new Dealer();
         $this->assertSame('dealer', $dealer->getName());
     }
-
 }

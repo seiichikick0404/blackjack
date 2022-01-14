@@ -14,6 +14,9 @@ class CardTest extends TestCase
         $card->randomTwoCard();
         $drawCards = $card->getDrawCards();
         $this->assertSame(2, count($drawCards));
+
+        // 配列かチェック
+        $this->assertTrue(is_array($drawCards));
     }
 
     public function testRandomCard()
@@ -22,6 +25,9 @@ class CardTest extends TestCase
         $card->randomCard();
         $drawCards = $card->getDrawCards();
         $this->assertSame(1, count($drawCards));
+
+        // 配列かチェック
+        $this->assertTrue(is_array($drawCards));
     }
 
     public function testGetDrawCards()
