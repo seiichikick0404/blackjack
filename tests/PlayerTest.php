@@ -14,6 +14,9 @@ class PlayerTest extends TestCase
 
         // カードを2枚ドローできてるか
         $this->assertSame(3, count($player->firstDrawCards($player)));
+
+        // 返り値が配列かチェック
+        $this->assertTrue(is_array($player->firstDrawCards($player)));
     }
 
     public function testDrawCards()
@@ -22,6 +25,9 @@ class PlayerTest extends TestCase
 
         // カードを1枚ドローできてるか
         $this->assertSame(2, count($player->drawCards($player)));
+
+        // 返り値が配列かチェック
+        $this->assertTrue(is_array($player->firstDrawCards($player)));
     }
 
     public function testHandleScore()
@@ -78,6 +84,13 @@ class PlayerTest extends TestCase
         $player3 = new Player();
         $player3->handleScore($player3, $drawCards3);
         $this->assertSame(14, $player3->getScore());
+    }
+
+    public function testGetScore()
+    {
+        // 数値かチェック
+        $player = new Player();
+        $this->assertTrue(is_numeric($player->getScore()));
     }
 
     public function testGetName()

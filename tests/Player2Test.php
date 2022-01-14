@@ -8,12 +8,26 @@ require_once(__DIR__ . '/../lib/Player2Class.php');
 
 class Player2Test extends TestCase
 {
+
+    private const GAME_COUNT = 17;
+
     public function testFirstDrawCards()
     {
         $player = new Player2();
 
         // カードを2枚ドローできてるか
         $this->assertSame(3, count($player->firstDrawCards($player)));
+
+        // 返り値が配列かチェック
+        $this->assertTrue(is_array($player->firstDrawCards($player)));
+    }
+
+    public function testEachDrawCards()
+    {
+        // スコアが17以上になるまでドローしてるかチェック
+        $player = new Player2();
+        $player->eachDrawCards($player);
+        $this->assertGreaterThanOrEqual(self::GAME_COUNT, $player->getScore());
     }
 
     public function testHandleScore()
@@ -72,10 +86,16 @@ class Player2Test extends TestCase
         $this->assertSame(14, $player3->getScore());
     }
 
+    public function testGetScore()
+    {
+        // 数値かチェック
+        $player = new Player2();
+        $this->assertTrue(is_numeric($player->getScore()));
+    }
+
     public function testGetName()
     {
         $player = new Player2();
         $this->assertSame('player2', $player->getName());
     }
-
 }

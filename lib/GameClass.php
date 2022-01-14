@@ -194,5 +194,5 @@ class Game
 }
 
 
-// $game = new Game(2);
-// $game->startGame();
+$game = new Game(1);
+$game->startGame();

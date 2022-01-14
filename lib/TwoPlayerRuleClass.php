@@ -19,10 +19,10 @@ class TwoPlayerRule implements Rule
         #　アクティブプレイヤーをセット
         $this->setActivePlayers($playerArr);
 
-        if ($playerArr[0]->getName() === 'player' && $playerArr[0]->getScore() > self::MATCH_POINT) {
+        if ($this->isPlayerBurst($playerArr)) {
             $this->displayResult($playerArr, 'ディーラー');
             exit;
-        } elseif ($playerArr[1]->getName() === 'dealer' && $playerArr[1]->getScore() > self::MATCH_POINT) {
+        } elseif ($this->isDealerBurst($playerArr)) {
             $this->displayResult($playerArr, 'あなた');
             exit;
         }
@@ -136,5 +136,25 @@ class TwoPlayerRule implements Rule
     public function setActivePlayers(array $playerArr): void
     {
         $this->ActivePlayers = $playerArr;
+    }
+
+    /**
+     * プレイヤーがバーストしたか判定
+     * @param array $playerArr
+     * @return bool
+     */
+    public function isPlayerBurst(array $playerArr): bool
+    {
+        return $playerArr[0]->getName() === 'player' && $playerArr[0]->getScore() > self::MATCH_POINT;
+    }
+
+    /**
+     * ディーラーがバーストしたか判定
+     * @param array $playerArr
+     * @return bool
+     */
+    public function isDealerBurst(array $playerArr): bool
+    {
+        return $playerArr[1]->getName() === 'dealer' && $playerArr[1]->getScore() > self::MATCH_POINT;
     }
 }
