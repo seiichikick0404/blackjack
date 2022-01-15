@@ -7,8 +7,10 @@ require_once(__DIR__ . '/RuleInterface.php');
 class ThreePlayerRule implements Rule
 {
     private const MATCH_POINT = 21;
-    private $activePlayers = [];
-    private $dealerStatus = false;
+    private array $activePlayers = [];
+    private bool $dealerStatus = false;
+    private int $dealerScore = 0;
+    
 
     /**
      * バーストしたかをチェックします
@@ -58,17 +60,15 @@ class ThreePlayerRule implements Rule
             if ($player->getName() === 'player') {
                 echo 'あなたの得点は' . $player->getScore() . 'です' . PHP_EOL;
                 $scoreArr['あなた'] = $diff;
-                $this->PlayerScore = $player->getScore();
             }
             if ($player->getName() === 'player2') {
                 echo 'プレイヤー2の得点は' . $player->getScore() . 'です' . PHP_EOL;
                 $scoreArr['プレイヤー2'] = $diff;
-                $this->Player2Score = $player->getScore();
             }
             if ($player->getName() === 'dealer') {
                 echo 'ディーラーの得点は' . $player->getScore() . 'です' . PHP_EOL;
                 $scoreArr['ディーラー'] = $diff;
-                $this->DealerScore = $player->getScore();
+                $this->dealerScore = $player->getScore();
                 $this->dealerStatus = true;
             }
         }
@@ -84,19 +84,19 @@ class ThreePlayerRule implements Rule
             if (count($playerArr) === 1) {
                 echo 'ディーラーの勝利です' . PHP_EOL;
             } elseif (count($playerArr) === 2 && $playerArr[0]->getName() === 'player') {
-                if ($playerArr[0]->getScore() > $this->DealerScore) {
+                if ($playerArr[0]->getScore() > $this->dealerScore) {
                     echo 'あなたの勝利です' . PHP_EOL;
-                } elseif ($playerArr[0]->getScore() < $this->DealerScore) {
+                } elseif ($playerArr[0]->getScore() < $this->dealerScore) {
                     echo 'ディーラーはあなたに勝利しました' . PHP_EOL;
-                } elseif ($playerArr[0]->getScore() === $this->DealerScore) {
+                } elseif ($playerArr[0]->getScore() === $this->dealerScore) {
                     echo 'あなたとディーラーは引き分けです' . PHP_EOL;
                 }
             } elseif (count($playerArr) === 2 && $playerArr[0]->getName() === 'player2') {
-                if ($playerArr[0]->getScore() > $this->DealerScore) {
+                if ($playerArr[0]->getScore() > $this->dealerScore) {
                     echo 'プレイヤー2の勝利です' . PHP_EOL;
-                } elseif ($playerArr[0]->getScore() < $this->DealerScore) {
+                } elseif ($playerArr[0]->getScore() < $this->dealerScore) {
                     echo 'ディーラーはプレイヤー2に勝利しました' . PHP_EOL;
-                } elseif ($playerArr[0]->getScore() === $this->DealerScore) {
+                } elseif ($playerArr[0]->getScore() === $this->dealerScore) {
                     echo 'プレイヤー2とディーラーは引き分けです' . PHP_EOL;
                 }
             } elseif (count($playerArr) === 3) {
@@ -106,15 +106,15 @@ class ThreePlayerRule implements Rule
 
                 foreach ($sliceArr as $player) {
                     if ($player->getName() === 'player') {
-                        if ($player->getScore() > $this->DealerScore) {
+                        if ($player->getScore() > $this->dealerScore) {
                             echo 'あなたの勝利です' . PHP_EOL;
-                        } elseif ($player->getScore() < $this->DealerScore) {
+                        } elseif ($player->getScore() < $this->dealerScore) {
                             echo 'ディーラーはあなたに勝利しました' . PHP_EOL;
                         }
                     } elseif ($player->getName() === 'player2') {
-                        if ($player->getScore() > $this->DealerScore) {
+                        if ($player->getScore() > $this->dealerScore) {
                             echo 'プレイヤー2の勝利です' . PHP_EOL;
-                        } elseif ($player->getScore() < $this->DealerScore) {
+                        } elseif ($player->getScore() < $this->dealerScore) {
                             echo 'ディーラーはプレイヤー2に勝利しました' . PHP_EOL;
                         }
                     }
