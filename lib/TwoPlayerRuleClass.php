@@ -7,7 +7,7 @@ require_once(__DIR__ . '/RuleInterface.php');
 class TwoPlayerRule implements Rule
 {
     private const MATCH_POINT = 21;
-    private array $ActivePlayers = [];
+    private array $activePlayers = [];
 
     /**
      * バーストしたかをチェックします
@@ -125,7 +125,7 @@ class TwoPlayerRule implements Rule
      */
     public function getActivePlayers(): array
     {
-        return $this->ActivePlayers;
+        return $this->activePlayers;
     }
 
     /**
@@ -135,7 +135,7 @@ class TwoPlayerRule implements Rule
      */
     public function setActivePlayers(array $playerArr): void
     {
-        $this->ActivePlayers = $playerArr;
+        $this->activePlayers = $playerArr;
     }
 
     /**

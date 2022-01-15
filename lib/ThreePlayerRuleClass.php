@@ -7,8 +7,8 @@ require_once(__DIR__ . '/RuleInterface.php');
 class ThreePlayerRule implements Rule
 {
     private const MATCH_POINT = 21;
-    private $ActivePlayers = [];
-    private $DealerStatus = false;
+    private $activePlayers = [];
+    private $dealerStatus = false;
 
     /**
      * バーストしたかをチェックします
@@ -25,18 +25,18 @@ class ThreePlayerRule implements Rule
             if ($player->getName() === 'player' && $player->getScore() > self::MATCH_POINT) {
                 echo 'あなたはバーストしました' . PHP_EOL;
                 // バーストしたプレイヤーを削除
-                unset($this->ActivePlayers[$index]);
-                $this->ActivePlayers = array_values($this->ActivePlayers);
+                unset($this->activePlayers[$index]);
+                $this->activePlayers = array_values($this->activePlayers);
             } elseif ($player->getName() === 'player2' && $player->getScore() > self::MATCH_POINT) {
                 echo 'プレイヤー2はバーストしました' . PHP_EOL;
                 // バーストしたプレイヤーを削除
-                unset($this->ActivePlayers[$index]);
-                $this->ActivePlayers = array_values($this->ActivePlayers);
+                unset($this->activePlayers[$index]);
+                $this->activePlayers = array_values($this->activePlayers);
             } elseif ($player->getName() === 'dealer' && $player->getScore() > self::MATCH_POINT) {
                 echo 'ディーラーはバーストしました' . PHP_EOL;
                 // バーストしたプレイヤーを削除
-                unset($this->ActivePlayers[$index]);
-                $this->ActivePlayers = array_values($this->ActivePlayers);
+                unset($this->activePlayers[$index]);
+                $this->activePlayers = array_values($this->activePlayers);
             }
         }
     }
@@ -69,7 +69,7 @@ class ThreePlayerRule implements Rule
                 echo 'ディーラーの得点は' . $player->getScore() . 'です' . PHP_EOL;
                 $scoreArr['ディーラー'] = $diff;
                 $this->DealerScore = $player->getScore();
-                $this->DealerStatus = true;
+                $this->dealerStatus = true;
             }
         }
 
@@ -79,7 +79,7 @@ class ThreePlayerRule implements Rule
             exit;
         }
 
-        if ($this->DealerStatus) {
+        if ($this->dealerStatus) {
             # ディーラーが存在した時
             if (count($playerArr) === 1) {
                 echo 'ディーラーの勝利です' . PHP_EOL;
@@ -120,7 +120,7 @@ class ThreePlayerRule implements Rule
                     }
                 }
             }
-        } elseif (!$this->DealerStatus) {
+        } elseif (!$this->dealerStatus) {
             # ディーラーが存在しない時
             foreach ($playerArr as $player) {
                 if ($player->getName() === 'player') {
@@ -199,7 +199,7 @@ class ThreePlayerRule implements Rule
      */
     public function getActivePlayers()
     {
-        return $this->ActivePlayers;
+        return $this->activePlayers;
     }
 
     /**
@@ -209,6 +209,6 @@ class ThreePlayerRule implements Rule
      */
     public function setActivePlayers(array $playerArr): void
     {
-        $this->ActivePlayers = $playerArr;
+        $this->activePlayers = $playerArr;
     }
 }

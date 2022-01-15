@@ -13,12 +13,12 @@ require_once(__DIR__ . '/ThreePlayerRuleClass.php');
 
 class Game
 {
-    private int $PlayerInt = 1;
-    private array $ActivePlayers = [];
+    private int $playerInt = 1;
+    private array $activePlayers = [];
 
     public function __construct($players)
     {
-        $this->PlayerInt = $players;
+        $this->playerInt = $players;
     }
 
     /**
@@ -51,12 +51,12 @@ class Game
                 $this->updateActivePlayers($rule);
             } elseif (!$this->isHandleDraw($playerArr[0], $input)) {
                 # プレイヤー以外の動作実行
-                $players = $this->getPlayerSliceArr($this->ActivePlayers);
+                $players = $this->getPlayerSliceArr($this->activePlayers);
 
                 foreach ($players as $player) {
                     $player->eachDrawCards($player);
                     #カードの判定
-                    $playerCheckHand->checkOver($this->ActivePlayers);
+                    $playerCheckHand->checkOver($this->activePlayers);
                     $this->updateActivePlayers($rule);
                 }
                 break;
@@ -65,7 +65,7 @@ class Game
 
         // 結果判定処理
         $resulut = new HandEvaluator($rule);
-        $resulut->checkWinner($this->ActivePlayers);
+        $resulut->checkWinner($this->activePlayers);
         exit;
     }
 
@@ -101,11 +101,11 @@ class Game
      */
     public function displayHandleDraw(Player $player): string
     {
-        if ($this->ActivePlayers[0]->getName() === 'player') {
+        if ($this->activePlayers[0]->getName() === 'player') {
             echo 'あなたの現在の得点は' . $player->getScore() . 'です。カードを引きますか？（Y/N）' . PHP_EOL;
             $input = fgets(STDIN);
             return $input;
-        } elseif ($this->ActivePlayers[0]->getName() !== 'player') {
+        } elseif ($this->activePlayers[0]->getName() !== 'player') {
             return 'N';
         } else {
             $input = fgets(STDIN);
@@ -120,13 +120,13 @@ class Game
      */
     public function getPlayerSliceArr(array $activePlayers): array
     {
-        if ($this->ActivePlayers[0]->getName() === 'player') {
+        if ($this->activePlayers[0]->getName() === 'player') {
             # 配列からプレイヤーを削除
-            $playerSliceArr = $this->ActivePlayers;
+            $playerSliceArr = $this->activePlayers;
             array_shift($playerSliceArr);
             $players = $playerSliceArr;
         } else {
-            $players = $this->ActivePlayers;
+            $players = $this->activePlayers;
         }
 
         return $players;
@@ -140,9 +140,9 @@ class Game
      */
     public function isHandleDraw(Player $player, string $input): bool
     {
-        if ($player->handleDraw($input) && $this->ActivePlayers[0]->getName() === 'player') {
+        if ($player->handleDraw($input) && $this->activePlayers[0]->getName() === 'player') {
             return true;
-        } elseif ($player->handleDraw($input) === false || $this->ActivePlayers[0]->getName() !== 'player') {
+        } elseif ($player->handleDraw($input) === false || $this->activePlayers[0]->getName() !== 'player') {
             return false;
         }
     }
@@ -154,7 +154,7 @@ class Game
      */
     public function updateActivePlayers(Rule $rule): void
     {
-        $this->ActivePlayers = $rule->getActivePlayers();
+        $this->activePlayers = $rule->getActivePlayers();
     }
 
     /**
@@ -163,16 +163,16 @@ class Game
      */
     public function setPlayers(): array
     {
-        if ($this->PlayerInt === 1) {
+        if ($this->playerInt === 1) {
             $player = new Player();
             $dealer = new Dealer();
-            $this->ActivePlayers = [$player, $dealer];
+            $this->activePlayers = [$player, $dealer];
             return [$player, $dealer];
-        } elseif ($this->PlayerInt === 2) {
+        } elseif ($this->playerInt === 2) {
             $player = new Player();
             $player2 = new Player2();
             $dealer = new Dealer();
-            $this->ActivePlayers = [$player, $player2, $dealer];
+            $this->activePlayers = [$player, $player2, $dealer];
             return [$player, $player2, $dealer];
         }
     }
@@ -183,9 +183,9 @@ class Game
      */
     public function getRule(): object
     {
-        if ($this->PlayerInt === 1) {
+        if ($this->playerInt === 1) {
             $rule = new TwoPlayerRule();
-        } elseif ($this->PlayerInt === 2) {
+        } elseif ($this->playerInt === 2) {
             $rule = new ThreePlayerRule();
         }
 
@@ -194,5 +194,5 @@ class Game
 }
 
 
-$game = new Game(1);
+$game = new Game(2);
 $game->startGame();
